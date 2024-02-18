@@ -2,6 +2,12 @@
 
 namespace MVCRealEstate.Models
 {
+    public enum RentOrSale
+    {
+        Rent,
+        Sale
+    }
+
     public class Offer
     {
         public int OfferId { get; set; }
@@ -12,18 +18,20 @@ namespace MVCRealEstate.Models
         [Required]
         public required string Type { get; set; }
 
+        public int? LocationId { get; set; }
         [Required]
         public required Location Location { get; set; }
 
         [Required]
         public required string Description { get; set; }
 
+        public List<int> OfferMediaId { get; set; }
         public List<OfferMedia>? Medias { get; set; }
 
         [Required]
-        public required decimal Price { get; set; }
+        public required int Price { get; set; }
 
-        public decimal? Surface { get; set; }
+        public int? Surface { get; set; }
 
         [Required]
         public required bool Active { get; set; }
@@ -35,12 +43,14 @@ namespace MVCRealEstate.Models
         public required string Status { get; set; }
 
         [Required]
+        [EnumDataType(typeof(RentOrSale))]
         public required string RentOrSale { get; set; }
 
         public int? AgencyId { get; set; }
 
         public required Agency Agency { get; set; }
 
+        public int? OwnerInfoId { get; set; }
         public required OwnerInfo OwnerInfo { get; set; }
 
         [Required]

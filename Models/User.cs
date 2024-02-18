@@ -26,5 +26,6 @@ namespace MVCRealEstate.Models
         public string? SocketId { get; set; }
 
         public required string RoleId { get; set; } 
+        public required Role role { get; set; }
     }
 }
