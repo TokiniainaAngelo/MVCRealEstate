@@ -7,51 +7,51 @@ namespace MVCRealEstate.Models
         public int OfferId { get; set; }
 
         [Required]
-        public string Reference { get; set; }
+        public required string Reference { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public required string Type { get; set; }
 
         [Required]
-        public Location Location { get; set; }
+        public required Location Location { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
-        public List<OfferMedia> Medias { get; set; }
+        public List<OfferMedia>? Medias { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public required decimal Price { get; set; }
 
         public decimal? Surface { get; set; }
 
         [Required]
-        public bool Active { get; set; }
+        public required bool Active { get; set; }
 
         [Required]
-        public int ReverseRanking { get; set; }
+        public required int ReverseRanking { get; set; }
 
         [Required]
-        public string Status { get; set; }
+        public required string Status { get; set; }
 
         [Required]
-        public string RentOrSale { get; set; }
+        public required string RentOrSale { get; set; }
 
         public int? AgencyId { get; set; }
 
-        public Agency Agency { get; set; }
+        public required Agency Agency { get; set; }
 
-        public OwnerInfo OwnerInfo { get; set; }
+        public required OwnerInfo OwnerInfo { get; set; }
 
         [Required]
-        public bool Archived { get; set; }
+        public required bool Archived { get; set; }
 
         public DateTime? DisabledOn { get; set; }
 
         public DateTime? ArchivedAt { get; set; }
 
         [Required]
-        public DateTime CreatedAt { get; set; }
+        public required DateTime CreatedAt { get; set; }
     }
 
   

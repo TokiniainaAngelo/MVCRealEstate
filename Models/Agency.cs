@@ -8,21 +8,20 @@ namespace MVCRealEstate.Models
 
         [Required]
         [StringLength(255)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
         [EmailAddress]
         [StringLength(255)]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [Required]
-        public List<string> Phones { get; set; }
+        public List<string>? Phones { get; set; }
 
         [Required]
-        public string Address { get; set; }
+        public required string Address { get; set; }
 
-        [Required]
-        public string Logo { get; set; }
+        public string? Logo { get; set; }
 
         [Required]
         public bool CanViewWishlist { get; set; }

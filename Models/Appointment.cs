@@ -10,13 +10,13 @@ namespace MVCRealEstate.Models
         public int UserId { get; set; }
 
         [Required]
-        public User User { get; set; }
+        public required User User { get; set; }
 
         [Required]
         public int OfferId { get; set; }
 
         [Required]
-        public Offer Offer { get; set; }
+        public required Offer Offer { get; set; }
 
         [Required]
         public DateTime Period { get; set; }

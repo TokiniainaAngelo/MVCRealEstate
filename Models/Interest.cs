@@ -8,21 +8,21 @@ namespace MVCRealEstate.Models
 
         [Required]
         [StringLength(255)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
         public int OfferId { get; set; }
 
         [Required]
-        public Offer Offer { get; set; }
+        public required Offer Offer { get; set; }
 
         [Required]
-        public int ClientId { get; set; }
+        public int UserId { get; set; }
 
         [Required]
-        public User Client { get; set; }
+        public required User User { get; set; }
 
-        public List<RealEstateMessage> Messages { get; set; }
+        public List<InterestMessage>? Messages { get; set; }
 
         [Required]
         public DateTime LastUpdatedAt { get; set; }

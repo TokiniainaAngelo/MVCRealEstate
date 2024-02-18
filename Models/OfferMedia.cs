@@ -7,9 +7,9 @@ namespace MVCRealEstate.Models
         public int OfferMediaId { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public required string Type { get; set; }
 
         [Required]
-        public string Path { get; set; }
+        public required string Path { get; set; }
     }
 }
