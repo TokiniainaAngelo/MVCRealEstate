@@ -2,8 +2,16 @@
 
 namespace MVCRealEstate.Models
 {
+    public enum UserType
+    {
+        Admin,
+        Client,
+    }
     public class User
     {
+
+        public int UserId { get; set; }
+
         [Required]
         [StringLength(255)]
         public required string FirstName { get; set; }
@@ -23,9 +31,6 @@ namespace MVCRealEstate.Models
         [StringLength(255)]
         public required string Password { get; set; }
 
-        public string? SocketId { get; set; }
-
-        public required string RoleId { get; set; } 
-        public required Role role { get; set; }
+        public required UserType Type { get; set; }
     }
 }

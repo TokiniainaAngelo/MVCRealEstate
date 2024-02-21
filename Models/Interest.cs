@@ -4,7 +4,7 @@ namespace MVCRealEstate.Models
 {
     public class Interest
     {
-        public int InterestRequestId { get; set; }
+        public int InterestId { get; set; }
 
         [Required]
         [StringLength(255)]

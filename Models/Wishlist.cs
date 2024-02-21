@@ -4,7 +4,7 @@ namespace MVCRealEstate.Models
 {
     public class Wishlist
     {
-        public int RealEstateWishlistId { get; set; }
+        public int WishlistId { get; set; }
 
         [Required]
         public required int UserId { get; set; }

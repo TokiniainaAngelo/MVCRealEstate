@@ -8,6 +8,14 @@ namespace MVCRealEstate.Models
         Sale
     }
 
+    public enum OfferType
+    {
+        Appartment,
+        House
+    }
+
+  
+
     public class Offer
     {
         public int OfferId { get; set; }
@@ -16,6 +24,7 @@ namespace MVCRealEstate.Models
         public required string Reference { get; set; }
 
         [Required]
+        [EnumDataType(typeof(OfferType))]
         public required string Type { get; set; }
 
         public int? LocationId { get; set; }
@@ -23,6 +32,7 @@ namespace MVCRealEstate.Models
         public required Location Location { get; set; }
 
         [Required]
+        [StringLength(300)]
         public required string Description { get; set; }
 
         public List<int> OfferMediaId { get; set; }
@@ -39,8 +49,6 @@ namespace MVCRealEstate.Models
         [Required]
         public required int ReverseRanking { get; set; }
 
-        [Required]
-        public required string Status { get; set; }
 
         [Required]
         [EnumDataType(typeof(RentOrSale))]
@@ -54,15 +62,6 @@ namespace MVCRealEstate.Models
         public required OwnerInfo OwnerInfo { get; set; }
 
         [Required]
-        public required bool Archived { get; set; }
-
-        public DateTime? DisabledOn { get; set; }
-
-        public DateTime? ArchivedAt { get; set; }
-
-        [Required]
         public required DateTime CreatedAt { get; set; }
     }
-
-  
 }

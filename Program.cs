@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MVCRealEstate.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MVCRealEstateContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MVCRealEstateContext") ?? throw new InvalidOperationException("Connection string 'MVCRealEstateContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -2,14 +2,10 @@
 
 namespace MVCRealEstate.Models
 {
-    public enum MessageSenderType
-    {
-        Admin,
-        Client,
-    }
+   
     public class InterestMessage
     {
-        public int RealEstateMessageId { get; set; }
+        public int InterestMessageId { get; set; }
 
         [Required]
         public required string Content { get; set; }
@@ -17,7 +13,7 @@ namespace MVCRealEstate.Models
         [Required]
         public DateTime Date { get; set; }
 
-        [EnumDataType(typeof(MessageSenderType))]
+        [EnumDataType(typeof(UserType))]
         public required string SenderType { get; set; }
 
         [Required]
