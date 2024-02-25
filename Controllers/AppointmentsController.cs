@@ -10,23 +10,23 @@ using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Controllers
 {
-    public class InterestsController : Controller
+    public class AppointmentsController : Controller
     {
         private readonly MVCRealEstateContext _context;
 
-        public InterestsController(MVCRealEstateContext context)
+        public AppointmentsController(MVCRealEstateContext context)
         {
             _context = context;
         }
 
-        // GET: Interests
+        // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var mVCRealEstateContext = _context.Interest.Include(i => i.Offer).Include(i => i.User);
+            var mVCRealEstateContext = _context.Appointment.Include(a => a.Offer).Include(a => a.User);
             return View(await mVCRealEstateContext.ToListAsync());
         }
 
-        // GET: Interests/Details/5
+        // GET: Appointments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,19 +34,19 @@ namespace MVCRealEstate.Controllers
                 return NotFound();
             }
 
-            var interest = await _context.Interest
-                .Include(i => i.Offer)
-                .Include(i => i.User)
-                .FirstOrDefaultAsync(m => m.InterestId == id);
-            if (interest == null)
+            var appointment = await _context.Appointment
+                .Include(a => a.Offer)
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(m => m.AppointmentId == id);
+            if (appointment == null)
             {
                 return NotFound();
             }
 
-            return View(interest);
+            return View(appointment);
         }
 
-        // GET: Interests/Create
+        // GET: Appointments/Create
         public IActionResult Create()
         {
             ViewData["OfferId"] = new SelectList(_context.Offer, "OfferId", "Description");
@@ -54,25 +54,25 @@ namespace MVCRealEstate.Controllers
             return View();
         }
 
-        // POST: Interests/Create
+        // POST: Appointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InterestId,Name,OfferId,UserId,MessagesId,LastUpdatedAt,CreatedAt")] Interest interest)
+        public async Task<IActionResult> Create([Bind("AppointmentId,UserId,OfferId,Period,IsBooked")] Appointment appointment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(interest);
+                _context.Add(appointment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OfferId"] = new SelectList(_context.Offer, "OfferId", "Description", interest.OfferId);
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "FirstName", interest.UserId);
-            return View(interest);
+            ViewData["OfferId"] = new SelectList(_context.Offer, "OfferId", "Description", appointment.OfferId);
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "FirstName", appointment.UserId);
+            return View(appointment);
         }
 
-        // GET: Interests/Edit/5
+        // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,24 +80,24 @@ namespace MVCRealEstate.Controllers
                 return NotFound();
             }
 
-            var interest = await _context.Interest.FindAsync(id);
-            if (interest == null)
+            var appointment = await _context.Appointment.FindAsync(id);
+            if (appointment == null)
             {
                 return NotFound();
             }
-            ViewData["OfferId"] = new SelectList(_context.Offer, "OfferId", "Description", interest.OfferId);
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "FirstName", interest.UserId);
-            return View(interest);
+            ViewData["OfferId"] = new SelectList(_context.Offer, "OfferId", "Description", appointment.OfferId);
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "FirstName", appointment.UserId);
+            return View(appointment);
         }
 
-        // POST: Interests/Edit/5
+        // POST: Appointments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("InterestId,Name,OfferId,UserId,MessagesId,LastUpdatedAt,CreatedAt")] Interest interest)
+        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,UserId,OfferId,Period,IsBooked")] Appointment appointment)
         {
-            if (id != interest.InterestId)
+            if (id != appointment.AppointmentId)
             {
                 return NotFound();
             }
@@ -106,12 +106,12 @@ namespace MVCRealEstate.Controllers
             {
                 try
                 {
-                    _context.Update(interest);
+                    _context.Update(appointment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InterestExists(interest.InterestId))
+                    if (!AppointmentExists(appointment.AppointmentId))
                     {
                         return NotFound();
                     }
@@ -122,12 +122,12 @@ namespace MVCRealEstate.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OfferId"] = new SelectList(_context.Offer, "OfferId", "Description", interest.OfferId);
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "FirstName", interest.UserId);
-            return View(interest);
+            ViewData["OfferId"] = new SelectList(_context.Offer, "OfferId", "Description", appointment.OfferId);
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "FirstName", appointment.UserId);
+            return View(appointment);
         }
 
-        // GET: Interests/Delete/5
+        // GET: Appointments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,36 +135,36 @@ namespace MVCRealEstate.Controllers
                 return NotFound();
             }
 
-            var interest = await _context.Interest
-                .Include(i => i.Offer)
-                .Include(i => i.User)
-                .FirstOrDefaultAsync(m => m.InterestId == id);
-            if (interest == null)
+            var appointment = await _context.Appointment
+                .Include(a => a.Offer)
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(m => m.AppointmentId == id);
+            if (appointment == null)
             {
                 return NotFound();
             }
 
-            return View(interest);
+            return View(appointment);
         }
 
-        // POST: Interests/Delete/5
+        // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var interest = await _context.Interest.FindAsync(id);
-            if (interest != null)
+            var appointment = await _context.Appointment.FindAsync(id);
+            if (appointment != null)
             {
-                _context.Interest.Remove(interest);
+                _context.Appointment.Remove(appointment);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool InterestExists(int id)
+        private bool AppointmentExists(int id)
         {
-            return _context.Interest.Any(e => e.InterestId == id);
+            return _context.Appointment.Any(e => e.AppointmentId == id);
         }
     }
 }

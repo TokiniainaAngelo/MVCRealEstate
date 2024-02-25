@@ -21,5 +21,7 @@ namespace MVCRealEstate.Data
         public DbSet<MVCRealEstate.Models.OwnerInfo> OwnerInfo { get; set; } = default!;
         public DbSet<MVCRealEstate.Models.Interest> Interest { get; set; } = default!;
         public DbSet<MVCRealEstate.Models.Offer> Offer { get; set; } = default!;
+        public DbSet<MVCRealEstate.Models.Appointment> Appointment { get; set; } = default!;
+        public DbSet<MVCRealEstate.Models.Message> Message { get; set; } = default!;
     }
 }

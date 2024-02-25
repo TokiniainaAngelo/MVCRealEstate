@@ -24,9 +24,6 @@ namespace MVCRealEstate.Models
         public string? Logo { get; set; }
 
         [Required]
-        public bool CanViewWishlist { get; set; }
-
-        [Required]
         public bool Active { get; set; }
 
         [Required]

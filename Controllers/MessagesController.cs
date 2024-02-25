@@ -10,22 +10,22 @@ using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Controllers
 {
-    public class AgenciesController : Controller
+    public class MessagesController : Controller
     {
         private readonly MVCRealEstateContext _context;
 
-        public AgenciesController(MVCRealEstateContext context)
+        public MessagesController(MVCRealEstateContext context)
         {
             _context = context;
         }
 
-        // GET: Agencies
+        // GET: Messages
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Agency.ToListAsync());
+            return View(await _context.Message.ToListAsync());
         }
 
-        // GET: Agencies/Details/5
+        // GET: Messages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace MVCRealEstate.Controllers
                 return NotFound();
             }
 
-            var agency = await _context.Agency
-                .FirstOrDefaultAsync(m => m.AgencyId == id);
-            if (agency == null)
+            var message = await _context.Message
+                .FirstOrDefaultAsync(m => m.MessageId == id);
+            if (message == null)
             {
                 return NotFound();
             }
 
-            return View(agency);
+            return View(message);
         }
 
-        // GET: Agencies/Create
+        // GET: Messages/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Agencies/Create
+        // POST: Messages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AgencyId,Name,Email,Phones,Address,Logo,Active,CreatedAt")] Agency agency)
+        public async Task<IActionResult> Create([Bind("MessageId,Content,Date,SenderType,SenderFullName,InterestRequestId")] Message message)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(agency);
+                _context.Add(message);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(agency);
+            return View(message);
         }
 
-        // GET: Agencies/Edit/5
+        // GET: Messages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace MVCRealEstate.Controllers
                 return NotFound();
             }
 
-            var agency = await _context.Agency.FindAsync(id);
-            if (agency == null)
+            var message = await _context.Message.FindAsync(id);
+            if (message == null)
             {
                 return NotFound();
             }
-            return View(agency);
+            return View(message);
         }
 
-        // POST: Agencies/Edit/5
+        // POST: Messages/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AgencyId,Name,Email,Phones,Address,Logo,Active,CreatedAt")] Agency agency)
+        public async Task<IActionResult> Edit(int id, [Bind("MessageId,Content,Date,SenderType,SenderFullName,InterestRequestId")] Message message)
         {
-            if (id != agency.AgencyId)
+            if (id != message.MessageId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MVCRealEstate.Controllers
             {
                 try
                 {
-                    _context.Update(agency);
+                    _context.Update(message);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AgencyExists(agency.AgencyId))
+                    if (!MessageExists(message.MessageId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace MVCRealEstate.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(agency);
+            return View(message);
         }
 
-        // GET: Agencies/Delete/5
+        // GET: Messages/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace MVCRealEstate.Controllers
                 return NotFound();
             }
 
-            var agency = await _context.Agency
-                .FirstOrDefaultAsync(m => m.AgencyId == id);
-            if (agency == null)
+            var message = await _context.Message
+                .FirstOrDefaultAsync(m => m.MessageId == id);
+            if (message == null)
             {
                 return NotFound();
             }
 
-            return View(agency);
+            return View(message);
         }
 
-        // POST: Agencies/Delete/5
+        // POST: Messages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var agency = await _context.Agency.FindAsync(id);
-            if (agency != null)
+            var message = await _context.Message.FindAsync(id);
+            if (message != null)
             {
-                _context.Agency.Remove(agency);
+                _context.Message.Remove(message);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AgencyExists(int id)
+        private bool MessageExists(int id)
         {
-            return _context.Agency.Any(e => e.AgencyId == id);
+            return _context.Message.Any(e => e.MessageId == id);
         }
     }
 }

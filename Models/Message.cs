@@ -3,9 +3,9 @@
 namespace MVCRealEstate.Models
 {
    
-    public class InterestMessage
+    public class Message
     {
-        public int InterestMessageId { get; set; }
+        public int MessageId { get; set; }
 
         [Required]
         public required string Content { get; set; }
@@ -23,7 +23,6 @@ namespace MVCRealEstate.Models
         [Required]
         public int InterestRequestId { get; set; }
 
-        [Required]
-        public required Interest Interest { get; set; }
+        public  Interest? Interest { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using MVCRealEstate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCRealEstate.Migrations
 {
     [DbContext(typeof(MVCRealEstateContext))]
-    partial class MVCRealEstateContextModelSnapshot : ModelSnapshot
+    [Migration("20240225123513_relationsCreate")]
+    partial class relationsCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,6 +39,9 @@ namespace MVCRealEstate.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CanViewWishlist")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -60,35 +66,6 @@ namespace MVCRealEstate.Migrations
                     b.HasKey("AgencyId");
 
                     b.ToTable("Agency");
-                });
-
-            modelBuilder.Entity("MVCRealEstate.Models.Appointment", b =>
-                {
-                    b.Property<int>("AppointmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"));
-
-                    b.Property<bool>("IsBooked")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Period")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AppointmentId");
-
-                    b.HasIndex("OfferId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Appointment");
                 });
 
             modelBuilder.Entity("MVCRealEstate.Models.Interest", b =>
@@ -172,7 +149,7 @@ namespace MVCRealEstate.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InterestId")
+                    b.Property<int>("InterestId")
                         .HasColumnType("int");
 
                     b.Property<int>("InterestRequestId")
@@ -354,32 +331,12 @@ namespace MVCRealEstate.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("MVCRealEstate.Models.Appointment", b =>
-                {
-                    b.HasOne("MVCRealEstate.Models.Offer", "Offer")
-                        .WithMany()
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVCRealEstate.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Offer");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MVCRealEstate.Models.Interest", b =>
@@ -405,7 +362,9 @@ namespace MVCRealEstate.Migrations
                 {
                     b.HasOne("MVCRealEstate.Models.Interest", "Interest")
                         .WithMany("Messages")
-                        .HasForeignKey("InterestId");
+                        .HasForeignKey("InterestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Interest");
                 });

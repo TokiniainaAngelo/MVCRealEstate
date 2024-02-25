@@ -9,14 +9,12 @@ namespace MVCRealEstate.Models
         [Required]
         public int UserId { get; set; }
 
-        [Required]
-        public required User User { get; set; }
+        public User? User { get; set; }
 
         [Required]
         public int OfferId { get; set; }
 
-        [Required]
-        public required Offer Offer { get; set; }
+        public Offer? Offer { get; set; }
 
         [Required]
         public DateTime Period { get; set; }

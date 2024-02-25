@@ -13,16 +13,15 @@ namespace MVCRealEstate.Models
         [Required]
         public int OfferId { get; set; }
 
-        [Required]
-        public required Offer Offer { get; set; }
+        public Offer? Offer { get; set; }
 
         [Required]
         public int UserId { get; set; }
 
-        [Required]
-        public required User User { get; set; }
+        public User? User { get; set; }
 
-        public List<InterestMessage>? Messages { get; set; }
+        public List<int>? MessagesId { get; set; }
+        public ICollection<Message>? Messages { get; set; }
 
         [Required]
         public DateTime LastUpdatedAt { get; set; }

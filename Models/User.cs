@@ -31,6 +31,7 @@ namespace MVCRealEstate.Models
         [StringLength(255)]
         public required string Password { get; set; }
 
-        public required UserType Type { get; set; }
+        [EnumDataType(typeof(UserType))]
+        public required string Type { get; set; }
     }
 }

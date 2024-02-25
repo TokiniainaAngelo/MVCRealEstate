@@ -26,6 +26,11 @@
                 <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
             </div>
             <div class="form-group">
+                <label asp-for="MessagesId" class="control-label"></label>
+                <input asp-for="MessagesId" class="form-control" />
+                <span asp-validation-for="MessagesId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="LastUpdatedAt" class="control-label"></label>
                 <input asp-for="LastUpdatedAt" class="form-control" />
                 <span asp-validation-for="LastUpdatedAt" class="text-danger"></span>
