@@ -1,5 +1,13 @@
+@font-face {
+    font-family: 'Roboto'; 
+    src: url("../fonts/Roboto.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
   font-size: 14px;
+  font-family:Roboto;
 }
 
 @media (min-width: 768px) {
@@ -18,5 +26,10 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    color: #292929;
+}
+
+p{
+    margin:0;
 }

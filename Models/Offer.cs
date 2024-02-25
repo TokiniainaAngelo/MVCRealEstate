@@ -4,15 +4,21 @@ namespace MVCRealEstate.Models
 {
     public enum RentOrSale
     {
+        [Display(Name ="Location")]
         Rent,
-        Sale
-    }
+		[Display(Name = "Vente")]
+		Sale
+	}
 
     public enum OfferType
     {
-        Appartment,
-        House
-    }
+		[Display(Name = "Appartement")]
+		Appartment,
+		[Display(Name = "Maison")]
+		House,
+		[Display(Name = "Terrain")]
+		Land,
+	}
 
   
 
