@@ -19,15 +19,28 @@ namespace MVCRealEstate.Controllers
             _context = context;
         }
 
-        // GET: Offers
-        public async Task<IActionResult> Index()
-        {
-            var mVCRealEstateContext = _context.Offer.Include(o => o.Agency).Include(o => o.Location).Include(o => o.OwnerInfo);
-            return View(await mVCRealEstateContext.ToListAsync());
-        }
+		// GET: Offers
+		// Search
+		public async Task<IActionResult> Index(string search)
+		{
+			if (_context.Offer == null)
+			{
+				return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+			}
 
-        // GET: Offers/Details/5
-        public async Task<IActionResult> Details(int? id)
+			var offers = from o in _context.Offer
+						 select o;
+
+			if (!String.IsNullOrEmpty(search))
+			{
+				offers = offers.Where(s => s.Reference!.Contains(search) || s.Description!.Contains(search));
+			}
+
+			return View(await offers.ToListAsync());
+		}
+
+		// GET: Offers/Details/5
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -172,5 +185,6 @@ namespace MVCRealEstate.Controllers
         {
             return _context.Offer.Any(e => e.OfferId == id);
         }
-    }
+      
+	}
 }

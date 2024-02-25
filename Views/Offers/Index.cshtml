@@ -11,6 +11,10 @@
 	<a asp-action="Create">Create New</a>
 </div>
 
+<form class="search-bar" asp-controller="Offers" asp-action="Index">
+	<input type="text" name="search" class="form-control" />
+	<input type="submit" value="Rechercher" />
+</form>
 <div class="container">
 	@foreach (var item in Model)
 	{
