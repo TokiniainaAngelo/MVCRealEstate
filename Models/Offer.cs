@@ -20,9 +20,14 @@ namespace MVCRealEstate.Models
 		Land,
 	}
 
-  
+	// Your ViewModel (it can be different depending on your actual setup)
+	public class OfferDetailsViewModel
+	{
+		public Offer? Offer { get; set; }
+		public List<Appointment>? Appointments { get; set; }
+	}
 
-    public class Offer
+	public class Offer
     {
         public int OfferId { get; set; }
 

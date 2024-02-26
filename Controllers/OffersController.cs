@@ -52,12 +52,15 @@ namespace MVCRealEstate.Controllers
                 .Include(o => o.Location)
                 .Include(o => o.OwnerInfo)
                 .FirstOrDefaultAsync(m => m.OfferId == id);
+            var appointments = await _context.Appointment.Where(a => a.OfferId == id).ToListAsync();
             if (offer == null)
             {
                 return NotFound();
             }
 
-            return View(offer);
+            var viewModel = new OfferDetailsViewModel { Appointments = appointments, Offer = offer };
+
+			return View(viewModel);
         }
 
         // GET: Offers/Create

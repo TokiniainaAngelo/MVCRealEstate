@@ -1,4 +1,4 @@
-﻿@model MVCRealEstate.Models.Offer
+﻿@model MVCRealEstate.Models.OfferDetailsViewModel
 
 @{
 	ViewData["Title"] = "Details";
@@ -8,13 +8,13 @@
 
 <h1>Details</h1>
 <div>
-	<a asp-action="Edit" asp-route-id="@Model?.OfferId">Edit</a> |
+	<a asp-action="Edit" asp-route-id="@Model?.Offer?.OfferId">Edit</a> |
 	<a asp-action="Index">Back to List</a>
 </div>
 <div class="detail-container">
 	<div class="header">
-		<div class="title">@Html.DisplayNameFor(model => model.Reference)</div>
-		<div>@Html.DisplayNameFor(model => model.RentOrSale)</div>
+		<div class="title">@Html.DisplayNameFor(model => model.Offer.Reference)</div>
+		<div>@Html.DisplayNameFor(model => model.Offer.RentOrSale)</div>
 	</div>
 	<div class="carousel"></div>
 	<div class="sections">
@@ -22,22 +22,21 @@
 			<h1>A propos</h1>
 			<div class="info-section">
 				<h3>Informations</h3>
-				<div>@Html.DisplayFor(model => model.Location.City) - @Html.DisplayFor(model => model.Location.Address)</div>
-				<div>@Html.DisplayFor(model => model.Price)</div>
-				<div>@Html.DisplayFor(model => model.Surface)</div>
-				<div>@Html.DisplayFor(model => model.CreatedAt)</div>
-				<div>@Html.DisplayFor(model => model.Description)</div>
+				<div>@Html.DisplayFor(model => model.Offer.Location.City) - @Html.DisplayFor(model => model.Offer.Location.Address)</div>
+				<div>@Html.DisplayFor(model => model.Offer.Price)</div>
+				<div>@Html.DisplayFor(model => model.Offer.Surface)</div>
+				<div>@Html.DisplayFor(model => model.Offer.CreatedAt)</div>
+				<div>@Html.DisplayFor(model => model.Offer.Description)</div>
 			</div>
 			<div class="info-section">
 				<h3>Agence</h3>
-				<div>@Html.DisplayFor(model => model.Agency.Name)</div>
-				<div>@Html.DisplayFor(model => model.Agency.Email)</div>
-				<div>@Html.DisplayFor(model => model.Agency.Phones)</div>
+				<div>@Html.DisplayFor(model => model.Offer.Agency.Name)</div>
+				<div>@Html.DisplayFor(model => model.Offer.Agency.Email)</div>
+				<div>@Html.DisplayFor(model => model.Offer.Agency.Phones)</div>
 			</div>
 			<div class="info-section">
 				<h3>Propriétaire</h3>
 				<div class="card">
-					
 				</div>
 			</div>
 		</div>
@@ -46,7 +45,12 @@
 				<h3>Prendre rendez-vous pour une visite</h3>
 				<div class="appointments">
 					<div class="appointment-block">
-						25 Septembre 2023 - 10:00
+						@foreach (var appointment in Model.Appointments)
+						{
+							<div class="appointment">
+								@appointment.Period.ToString("yyyy-MM-dd HH:mm")
+							</div>
+						}
 					</div>
 				</div>
 			</div>
