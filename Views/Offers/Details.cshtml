@@ -39,6 +39,9 @@
 			<div class="info-section">
 				<h3>Propriétaire</h3>
 				<div class="card">
+					<div>@Html.DisplayFor(model => model.Offer.OwnerInfo.FullName)</div>
+					<div>@Html.DisplayFor(model => model.Offer.OwnerInfo.Email)</div>
+					<div>@Html.DisplayFor(model => model.Offer.OwnerInfo.Phones)</div>
 				</div>
 			</div>
 		</div>
