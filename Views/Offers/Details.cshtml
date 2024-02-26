@@ -16,7 +16,9 @@
 		<div class="title">@Html.DisplayNameFor(model => model.Offer.Reference)</div>
 		<div>@Html.DisplayNameFor(model => model.Offer.RentOrSale)</div>
 	</div>
-	<div class="carousel"></div>
+	<div class="carousel">
+		<img src="~/medias/sample.jpg" alt="">
+	</div>
 	<div class="sections">
 		<div class="left">
 			<h1>A propos</h1>
@@ -44,14 +46,13 @@
 			<div class="actions">
 				<h3>Prendre rendez-vous pour une visite</h3>
 				<div class="appointments">
-					<div class="appointment-block">
-						@foreach (var appointment in Model.Appointments)
-						{
-							<div class="appointment">
-								@appointment.Period.ToString("yyyy-MM-dd HH:mm")
-							</div>
-						}
-					</div>
+					@foreach (var appointment in Model.Appointments)
+					{
+						<div class="appointment">
+							@appointment.Period.ToString("dd MMMM yyyy HH:mm")
+						</div>
+					}
+
 				</div>
 			</div>
 			<div class="actions messages-block">

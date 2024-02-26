@@ -23,6 +23,12 @@
     background-color:red;
 }
 
+.carousel img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+
 .sections{
     width:100%;
     display:grid;
