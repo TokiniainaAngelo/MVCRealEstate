@@ -33,5 +33,8 @@ namespace MVCRealEstate.Models
 
         [EnumDataType(typeof(UserType))]
         public required string Type { get; set; }
+
+        [EmailAddress]
+        public required string Email { get; set; }
     }
 }

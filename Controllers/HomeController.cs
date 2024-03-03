@@ -15,7 +15,14 @@ namespace MVCRealEstate.Controllers
 
         public IActionResult Index()
         {
-            return View();
+			// Retrieve session values
+			var userId = HttpContext.Session.GetString("UserId");
+			var login = HttpContext.Session.GetString("Login");
+
+			// Use the session values as needed
+			ViewData["UserId"] = userId;
+			ViewData["Login"] = login;
+			return View();
         }
 
         public IActionResult Privacy()

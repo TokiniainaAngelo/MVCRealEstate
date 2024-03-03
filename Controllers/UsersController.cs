@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
 using MVCRealEstate.Models;
+using Microsoft.AspNetCore.Http;
+
 
 namespace MVCRealEstate.Controllers
 {
     public class UsersController : Controller
     {
         private readonly MVCRealEstateContext _context;
+
 
         public UsersController(MVCRealEstateContext context)
         {
@@ -54,16 +52,51 @@ namespace MVCRealEstate.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,FullName,Login,Password,Type")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,FullName,Login,Password,Type,Email")] User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var get_user = _context.User.FirstOrDefault(p => p.Login == user.Login);
+                if(get_user == null)
+                {
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Message = "UserName already exists";
+                    return View();
+                }
+              
             }
-            return View(user);
+            return RedirectToAction("Home");
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+                var get_user = _context.User.Single(p => p.Login == user.Login
+                && p.Password == user.Password);
+                if (get_user != null)
+                {
+                HttpContext.Session.SetString("UserId", get_user.UserId.ToString());
+                HttpContext.Session.SetString("Login", get_user.Login.ToString());
+
+                return Redirect("/");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Login ou mot de passe incorrecte");
+                }
+
+			return View();
+        }
+
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -153,5 +186,8 @@ namespace MVCRealEstate.Controllers
         {
             return _context.User.Any(e => e.UserId == id);
         }
+
+       
     }
+
 }
