@@ -27,6 +27,13 @@ namespace MVCRealEstate.Controllers
 			{
 				return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
 			}
+			// Retrieve session values
+			var userId = HttpContext.Session.GetString("UserId");
+			var login = HttpContext.Session.GetString("Login");
+
+			// Use the session values as needed
+			ViewData["UserId"] = userId;
+			ViewData["Login"] = login;
 
 			var offers = from o in _context.Offer
 						 select o;
@@ -47,7 +54,15 @@ namespace MVCRealEstate.Controllers
                 return NotFound();
             }
 
-            var offer = await _context.Offer
+			// Retrieve session values
+			var userId = HttpContext.Session.GetString("UserId");
+			var login = HttpContext.Session.GetString("Login");
+			// Use the session values as needed
+			ViewData["UserId"] = userId;
+			ViewData["Login"] = login;
+
+
+			var offer = await _context.Offer
                 .Include(o => o.Agency)
                 .Include(o => o.Location)
                 .Include(o => o.OwnerInfo)
@@ -184,7 +199,8 @@ namespace MVCRealEstate.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OfferExists(int id)
+
+		private bool OfferExists(int id)
         {
             return _context.Offer.Any(e => e.OfferId == id);
         }

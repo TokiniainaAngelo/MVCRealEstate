@@ -162,7 +162,47 @@ namespace MVCRealEstate.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AppointmentExists(int id)
+		// POST: Appointments/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPatch]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> BookAppointment(int id)
+		{
+
+
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					// Retrieve the existing appointment from the database
+					var existingAppointment = await _context.Appointment.FindAsync(id);
+					var user = HttpContext.Session.GetString("UserId");
+
+					if (existingAppointment == null)
+					{
+						return NotFound();
+					}
+
+					existingAppointment.UserId = Int32.Parse(user);
+					existingAppointment.IsBooked = true;
+
+					_context.Update(existingAppointment);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					return NotFound();
+				}
+				return RedirectToAction(nameof(Index));
+			}
+
+			// If the model state is not valid, you might want to populate any necessary ViewData or SelectList items here.
+
+			return RedirectToAction("Details", "Offers");
+		}
+
+		private bool AppointmentExists(int id)
         {
             return _context.Appointment.Any(e => e.AppointmentId == id);
         }

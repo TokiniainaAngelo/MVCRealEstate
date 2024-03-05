@@ -1,7 +1,15 @@
 ﻿@model MVCRealEstate.Models.OfferDetailsViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 
 @{
 	ViewData["Title"] = "Details";
+}
+
+@functions {
+	public string GetAntiXsrfRequestToken()
+	{
+		return Xsrf.GetAndStoreTokens(Context).RequestToken;
+	}
 }
 
 <link rel="stylesheet" href="~/css/offer-detail.css" />
@@ -51,12 +59,13 @@
 				<div class="appointments">
 					@foreach (var appointment in Model.Appointments)
 					{
-						<div class="appointment">
+						<div class="appointment" data-id="@appointment.AppointmentId">
 							@appointment.Period.ToString("dd MMMM yyyy HH:mm")
 						</div>
 					}
 
 				</div>
+				<button id="bookButton" style="display:none;">Réserver	</button>
 			</div>
 			<div class="actions messages-block">
 				<h3>Echanges</h3>
@@ -65,3 +74,65 @@
 		</div>
 	</div>
 </div>
+
+<!-- Your confirmation modal here -->
+<div id="confirmationModal" style="display:none;">
+	<!-- Modal content goes here -->
+	<p>Are you sure you want to book this appointment?</p>
+	<button id="confirmBooking">Yes</button>
+	<button id="cancelBooking">Cancel</button>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.appointment').click(function () {
+			// Remove selected class from all appointments
+			$('.appointment').removeClass('selected');
+
+			// Add selected class to the clicked appointment
+			$(this).addClass('selected');
+
+			// Show the book button
+			$('#bookButton').show();
+		});
+
+		$('#bookButton').click(function () {
+			// Display the confirmation modal
+			$('#confirmationModal').show();
+		});
+
+		$('#confirmBooking').click(function () {
+			// Get the selected appointment id
+			var selectedAppointmentId = $('.appointment.selected').data('id');
+			var offer = $('.appointment.selected').data('offer');
+
+			confirmBooking(selectedAppointmentId);
+		});
+
+		$('#cancelBooking').click(function () {
+			// Close the confirmation modal
+			$('#confirmationModal').hide();
+		});
+
+		// Function to handle the confirmation button click
+		function confirmBooking(appointmentId) {
+			// Make an AJAX request to the controller action
+			$.ajax({
+				url: "/Appointments/BookAppointment/" + appointmentId,
+				type: 'PATCH',
+				contentType: 'application/json; charset=utf-8',
+				headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val(), "RequestVerificationToken": '@GetAntiXsrfRequestToken()' },
+				success: function (data) {
+					// Handle the success response
+					console.log('Appointment booked successfully');
+					// Optionally, update the element or perform other actions
+				},
+				error: function (error) {
+					// Handle the error response
+					console.error('Error booking appointment: ', error);
+				}
+			});
+		}
+	});
+</script>
