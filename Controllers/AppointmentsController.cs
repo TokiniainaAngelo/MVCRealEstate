@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IronPdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Migrations;
 using MVCRealEstate.Models;
+
 
 namespace MVCRealEstate.Controllers
 {
@@ -201,7 +204,34 @@ namespace MVCRealEstate.Controllers
 
 			return RedirectToAction("Details", "Offers");
 		}
+		[HttpPost]
+		public async Task<FileContentResult> GeneratePdfTicket(int appointmentId)
+		{
+            var userId = Int32.Parse(HttpContext.Session.GetString("UserId"));
 
+			var appointment = await _context.Appointment.FindAsync(appointmentId);
+            var user = await _context.User.FindAsync(userId);
+
+			// Customize HTML content as per your requirements
+			var htmlContent = $@"
+    <h1>Appointment Ticket</h1>
+    <p>Appointment ID: {appointment.AppointmentId}</p>
+    <p>User ID: {user.LastName}</p>
+    <!-- Add more appointment and user information as needed -->
+";
+
+			var renderer = new ChromePdfRenderer();
+			var pdf = renderer.RenderHtmlAsPdf(htmlContent);
+
+			// Specify content type and file name for the response
+			var contentType = "application/pdf";
+			var fileName = "AppointmentTicket.pdf";
+
+			// Return the PDF content as a FileContentResult
+			return File(pdf.BinaryData, contentType, fileName); ;
+		}
+
+		
 		private bool AppointmentExists(int id)
         {
             return _context.Appointment.Any(e => e.AppointmentId == id);
