@@ -5,7 +5,7 @@
 <div class="intro" style="background-image: url(/medias/slide-3.jpg)">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8" >
+			<div class="col-lg-8">
 				<div class="intro-body">
 					<p class="intro-title-top">
 						Doral, Florida
@@ -113,4 +113,77 @@
 			</div>
 		</div>
 	</div>
+</section>
+<section class="section-property section-t8">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="title-wrap d-flex justify-content-between">
+					<div class="title-box">
+						<h2 class="title-a">Les dernières offres</h2>
+					</div>
+					<div class="title-link">
+						<a  asp-controller="Offers"  asp-action="Index">
+							Toutes les offres
+							<span class="ion-ios-arrow-forward"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="latest" style="
+				 display: flex;
+				 gap: 5%;
+						 ">
+			@foreach (var item in ViewData["Offers"] as List<Offer>)
+			{
+				<div class="carousel-item-b">
+					<div class="card-box-a card-shadow" style="
+				 width: 100%;
+				 height: 500px;
+						 ">
+						<div class="img-box-a">
+							<img src="~/medias/property-1.jpg" alt="" class="img-a img-fluid">
+						</div>
+						<div class="card-overlay">
+							<div class="card-overlay-a-content">
+								<div class="card-header-a">
+									<h2 class="card-title-a">
+										<a href="property-single.html">
+											@item.Reference
+											<br />@item.Location.City
+										</a>
+									</h2>
+								</div>
+								<div class="card-body-a">
+									<div class="price-box d-flex">
+										<span class="price-a">@item.Type | @item.Price Ar</span>
+									</div>
+									<a asp-controller="Offers" asp-action="Details" asp-route-id="@item.OfferId" class="link-a">
+										Voir les details
+										<span class="ion-ios-arrow-forward"></span>
+									</a>
+								</div>
+								<div class="card-footer-a">
+									<ul class="card-info d-flex justify-content-around">
+										<li>
+											<h4 class="card-info-title">Surface</h4>
+											<span>
+												@item.Surface
+												<sup>2</sup>
+											</span>
+										</li>
+										<li>
+											<h4 class="card-info-title">Garages</h4>
+											<span>1</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+
 </section>
