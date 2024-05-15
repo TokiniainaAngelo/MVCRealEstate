@@ -1,16 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var map = L.map('map').setView([51.505, -0.09], 13); // Set initial view with default coordinates
+    var latitude = parseFloat(document.getElementById('latitude').value);
+    var longitude = parseFloat(document.getElementById('longitude').value);
+    var address = parseFloat(document.getElementById('address').value);
+
+    var map = L.map('map').setView([latitude, longitude], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    var marker = L.marker([51.505, -0.09]).addTo(map)
-        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    var marker = L.marker([latitude, longitude]).addTo(map)
+        .bindPopup('Coordonnees: ' + latitude + '<br> Longitude: ' + longitude)
         .openPopup();
 });
-
-function updateMap(lat, lng) {
-    map.setView([lat, lng], 13);
-    marker.setLatLng([lat, lng]).update();
-}
