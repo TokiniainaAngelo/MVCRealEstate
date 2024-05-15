@@ -35,8 +35,11 @@ namespace MVCRealEstate.Controllers
 			ViewData["UserId"] = userId;
 			ViewData["Login"] = login;
 
-			var offers = from o in _context.Offer
-						 select o;
+			var offers = _context.Offer
+						 .Include(o => o.Agency)
+						 .Include(o => o.OwnerInfo)
+						 .Include(o => o.Location)
+						 .AsQueryable();
 
 			if (!String.IsNullOrEmpty(search))
 			{

@@ -4,37 +4,71 @@
 	ViewData["Title"] = "Index";
 }
 <link rel="stylesheet" href="~/css/offer.css" />
-
-<h1>Acheter ou louer</h1>
-
 <div>
 	<a asp-action="Create">Create New</a>
 </div>
-
+<!--/ Intro Single star /-->
+<section class="intro-single" style="padding:20px 0;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-lg-8">
+				<div class="title-single-box">
+					<h1 class="title-single">Liste des offres</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 <form class="search-bar" asp-controller="Offers" asp-action="Index">
 	<input type="text" name="search" class="form-control" />
 	<input type="submit" value="Rechercher" />
 </form>
-<div class="container">
-	@foreach (var item in Model)
-	{
-		<div class="card">
-			<div class="medias"></div>
-			<div class="rows">
-				<div class="first">
-					<a class="title" asp-action="Details" asp-route-id="@item.OfferId">@Html.DisplayFor(modelItem => item.Reference) - @Html.DisplayFor(modelItem => item.Type)</a>
-					<div><span>Prix</span> : @Html.DisplayFor(modelItem => item.Price) Ar</div>
+<section class="property-grid grid">
+	<div class="container">
+		<div class="row">
+			@foreach(var item in Model)
+			{
+				<div class="col-md-4">
+					<div class="card-box-a card-shadow">
+						<div class="img-box-a">
+							<img src="~/medias/property-1.jpg" alt="" class="img-a img-fluid">
+						</div>
+						<div class="card-overlay">
+							<div class="card-overlay-a-content">
+								<div class="card-header-a">
+									<h2 class="card-title-a">
+										<a href="#">
+											@item.Reference
+											<br />@item.Location.City
+										</a>
+									</h2>
+								</div>
+								<div class="card-body-a">
+									<div class="price-box d-flex">
+										<span class="price-a">>@item.Type | @item.Price Ar</span>
+									</div>
+									<a asp-controller="Offers" asp-action="Details" asp-route-id="@item.OfferId" class="link-a">
+										Voir les details
+										<span class="ion-ios-arrow-forward"></span>
+									</a>
+								</div>
+								<div class="card-footer-a">
+									<ul class="card-info d-flex justify-content-around">
+										<li>
+											<h4 class="card-info-title">Surface</h4>
+											<span>
+												@item.Surface m
+												<sup>2</sup>
+											</span>
+										</li>
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="second">
-					<span></span>
-					<div> <span>Surface : </span> @Html.DisplayFor(modelItem => item.Surface)</div>
-					<div>@Html.DisplayFor(modelItem => item.Description)</div>
-				</div>
-				<div class="third">
-					<div> <span>Surface : </span> @Html.DisplayFor(modelItem => item.Location.City) - @Html.DisplayFor(modelItem => item.Location.Address)</div>
-					<div>@Html.DisplayFor(modelItem => item.ReverseRanking)</div>
-				</div>
-			</div>
+			}
 		</div>
-	}
-</div>
+	</div>
+</section>
