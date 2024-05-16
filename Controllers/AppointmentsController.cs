@@ -188,12 +188,12 @@ namespace MVCRealEstate.Controllers
 					}
 
 					existingAppointment.UserId = Int32.Parse(user);
-					existingAppointment.IsBooked = true;
+					existingAppointment.IsBooked = !existingAppointment.IsBooked;
 
 					_context.Update(existingAppointment);
 					await _context.SaveChangesAsync();
 				}
-				catch (DbUpdateConcurrencyException)
+				catch (DbUpdateConcurrencyException e)
 				{
 					return NotFound();
 				}
