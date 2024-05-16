@@ -184,7 +184,7 @@
 												data-target="#appointmentModal"
 												data-appointment-id="@appointment.AppointmentId"
 												onclick="showModal(this);"
-												@* @(appointment.IsBooked ? "disabled" : "") *@
+												@(appointment.IsBooked ? "disabled" : "") 
 										>
 											@appointment.Period.ToString("dd MMMM yyyy HH:mm")
 										</button>
