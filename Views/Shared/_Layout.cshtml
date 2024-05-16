@@ -30,7 +30,17 @@
 					</ul>
 					@if (!string.IsNullOrEmpty((string)ViewData["Login"]))
 					{
-						<p>Bienvenue @ViewData["Login"]</p>
+						<div class="dropdown">
+							<p onclick="$('.dropdown-menu').toggle()" class="dropdown-toggle" id="loginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Bienvenue @ViewData["Login"]
+							</p>
+							<div class="dropdown-menu" style="right:10px;" aria-labelledby="loginDropdown">
+								<a asp-controller="Users" asp-action="Logout" class="dropdown-item">
+									Déconnecter
+									<span class="ion-ios-arrow-forward"></span>
+								</a>
+							</div>
+						</div>
 					}
 					else
 					{

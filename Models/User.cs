@@ -20,9 +20,8 @@ namespace MVCRealEstate.Models
         [StringLength(255)]
         public required string LastName { get; set; }
 
-        [Required]
         [StringLength(255)]
-        public required string FullName { get; set; }
+        public  string? FullName { get; set; }
 
         [StringLength(255)] 
         public required string Login { get; set; }
@@ -32,7 +31,7 @@ namespace MVCRealEstate.Models
         public required string Password { get; set; }
 
         [EnumDataType(typeof(UserType))]
-        public required string Type { get; set; }
+        public  string? Type { get; set; }
 
         [EmailAddress]
         public required string Email { get; set; }

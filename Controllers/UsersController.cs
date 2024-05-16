@@ -52,26 +52,28 @@ namespace MVCRealEstate.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,FullName,Login,Password,Type,Email")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,Login,Password,Email")] User user)
         {
-            if (ModelState.IsValid)
-            {
+            // Set FullName and Type here
+            user.FullName = user.FirstName + " " + user.LastName;
+            user.Type = UserType.Client.ToString();
+
+          
                 var get_user = _context.User.FirstOrDefault(p => p.Login == user.Login);
-                if(get_user == null)
+                if (get_user == null)
                 {
                     _context.Add(user);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                     return RedirectToAction("Login", "Users"); // Redirect to login
                 }
                 else
                 {
                     ViewBag.Message = "UserName already exists";
-                    return View();
+                    return View(user);
                 }
-              
-            }
-            return RedirectToAction("Home");
+           
         }
+
 
         public ActionResult Login()
         {
@@ -96,10 +98,18 @@ namespace MVCRealEstate.Controllers
 
 			return View();
         }
+		public IActionResult Logout()
+		{
+			// Clear the session
+			HttpContext.Session.Clear();
+
+			// Redirect to the home page
+			return RedirectToAction("Index", "Home");
+		}
 
 
-        // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+		// GET: Users/Edit/5
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
