@@ -25,9 +25,27 @@ namespace MVCRealEstate.Controllers
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var mVCRealEstateContext = _context.Appointment.Include(a => a.Offer).Include(a => a.User);
-            return View(await mVCRealEstateContext.ToListAsync());
-        }
+			var userId = HttpContext.Session.GetString("UserId");
+
+			if (string.IsNullOrEmpty(userId))
+			{
+				return RedirectToAction("Login", "Users");
+			}
+
+			var userIdInt = int.Parse(userId);
+
+			var mVCRealEstateContext = _context.Appointment
+				.Include(a => a.Offer)
+					.ThenInclude(o => o.Agency)
+				.Include(a => a.Offer)
+					.ThenInclude(o => o.OwnerInfo)
+				.Include(a => a.Offer)
+					.ThenInclude(o => o.Location)
+				.Include(a => a.User)
+				.Where(a => a.User.UserId == userIdInt);
+
+			return View(await mVCRealEstateContext.ToListAsync());
+		}
 
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -204,6 +222,47 @@ namespace MVCRealEstate.Controllers
 
 			return RedirectToAction("Details", "Offers");
 		}
+
+		// POST: Appointments/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPatch]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> CancelAppointment(int id)
+		{
+
+
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					// Retrieve the existing appointment from the database
+					var existingAppointment = await _context.Appointment.FindAsync(id);
+					var user = HttpContext.Session.GetString("UserId");
+
+					if (existingAppointment == null)
+					{
+						return NotFound();
+					}
+
+					existingAppointment.UserId = null;
+					existingAppointment.IsBooked = false;
+
+					_context.Update(existingAppointment);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException e)
+				{
+					return NotFound();
+				}
+				return RedirectToAction("Index", "Appointments");
+			}
+
+			// If the model state is not valid, you might want to populate any necessary ViewData or SelectList items here.
+
+			return RedirectToAction("Index", "Appointments");
+		}
+
 		[HttpPost]
 		public async Task<FileContentResult> GeneratePdfTicket(int appointmentId)
 		{

@@ -27,7 +27,12 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Offers" asp-action="Index">Offres</a>
 						</li>
-				
+						@if (!string.IsNullOrEmpty((string)ViewData["Login"]))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">Rendez-vous</a>
+							</li>
+						}
 					</ul>
 				</div>
 				@if (!string.IsNullOrEmpty((string)ViewData["Login"]))

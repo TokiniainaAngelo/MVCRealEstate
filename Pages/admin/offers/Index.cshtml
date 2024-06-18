@@ -1,0 +1,47 @@
+﻿@page
+@model MVCRealEstate.Pages.admin.offers.IndexModel
+@{
+	ViewData["Title"] = "Liste des Offres";
+	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-12">
+	<div class="card">
+		<div class="header">
+			<h4 class="title">Liste des offres</h4>
+			<p class="category">Here is a subtitle for this table</p>
+		</div>
+		<div class="content table-responsive table-full-width">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th>Référence</th>
+						<th>Type</th>
+						<th>Prix</th>
+						<th>Surface</th>
+						<th>Location</th>
+						<th>Description</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var offer in Model.Offers)
+					{
+						<tr>
+							<td>@offer.Reference</td>
+							<td>@offer.Type</td>
+							<td>@offer.Price</td>
+							<td>@offer.Surface</td>
+							<td>@offer.Location?.City</td>
+							<td>@offer.Description</td>
+							<td>
+								<a asp-page="./OfferDetails" asp-route-id="@offer.OfferId" class="btn btn-primary">Voir</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</div>

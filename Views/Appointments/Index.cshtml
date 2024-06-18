@@ -1,53 +1,112 @@
 ﻿@model IEnumerable<MVCRealEstate.Models.Appointment>
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+}
+@functions {
+	public string GetAntiXsrfRequestToken()
+	{
+		return Xsrf.GetAndStoreTokens(Context).RequestToken;
+	}
 }
 
-<h1>Index</h1>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link href="~/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+<link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+<section class="intro-single" style="padding:20px 0;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-lg-8">
+				<div class="title-single-box">
+					<h1 class="title-single">Vos rendez-vous</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
 <p>
-    <a asp-action="Create">Create New</a>
+	<a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Offer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Period)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsBooked)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Offer.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Period)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsBooked)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+<section class="section-agents">
+	<div class="container">
+		<div class="row" style="height:300px;">
+			@foreach (var item in Model)
+			{
+				<div class="col-md-4" style="height:inherit;">
+					<div class="card-box-d" style="height:inherit;">
+						<div class="card-img-d">
+							<img src="~/medias/property-1.jpg" alt="" class="img-d img-fluid">
+						</div>
+						<div class="card-overlay card-overlay-hover">
+							<div class="card-header-d">
+								<div class="card-title-d align-self-center">
+									<h3 class="title-d">
+										@Html.DisplayFor(model => item.Period)
+									</h3>
+								</div>
+							</div>
+							<div class="card-body-d">
+								<p class="content-d color-text-a">
+									@Html.DisplayFor(modelItem => item.Offer.Location.Address) - @Html.DisplayFor(modelItem => item.Offer.Location.City) <br>@Html.DisplayFor(modelItem => item.Offer.Reference)
+								</p>
+								<div class="info-agents color-a">
+									<p>
+										<strong>Contact: </strong> @Html.DisplayFor(modelItem => item.Offer.OwnerInfo.Phones[0])
+									</p>
+									<p>
+										<strong>Email: </strong> @Html.DisplayFor(modelItem => item.Offer.OwnerInfo.Email)
+									</p>
+								</div>
+							</div>
+							<div class="card-footer-d">
+								<div class="socials-footer d-flex justify-content-center">
+									<ul class="list-inline">
+										<li class="list-inline-item">
+											<a href="javascript:void(0);" onclick="cancelAppointment(@item.AppointmentId)">
+												<i class="fa fa-close" aria-hidden="true"></i>
+												@Html.AntiForgeryToken()
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</section>
+
+<script>
+	function getAntiForgeryToken() {
+		return document.querySelector('input[name="__RequestVerificationToken"]').value;
+	}
+	function cancelAppointment(appointmentId) {
+		const antiForgeryToken = getAntiForgeryToken();
+		fetch('/Appointments/CancelAppointment/' + appointmentId, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				'RequestVerificationToken': antiForgeryToken
+			},
+		}).then(response => {
+			if (response.ok) {
+				window.location.href = '/Appointments';
+			} else {
+				console.error('Failed to cancel appointment');
+			}
+		}).catch(error => console.error('Error:', error));
+	}
+</script>
