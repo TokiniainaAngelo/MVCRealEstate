@@ -1,0 +1,72 @@
+﻿@page "{id:int}"
+@using MVCRealEstate.Models
+@model MVCRealEstate.Pages.admin.offers.EditModel
+@{
+    ViewData["Title"] = "Modifier l'Offre";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Modifier l'Offre</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Offer.OfferId"></label>
+        <input asp-for="Offer.OfferId" class="form-control" />
+        <span asp-validation-for="Offer.OfferId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Offer.Reference"></label>
+        <input asp-for="Offer.Reference" class="form-control" />
+        <span asp-validation-for="Offer.Reference" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Offer.Type"></label>
+        <select asp-for="Offer.Type" class="form-control">
+            <option value="">Sélectionnez le type</option>
+            @foreach (var type in Enum.GetValues(typeof(OfferType)))
+            {
+                <option value="@type">@type</option>
+            }
+        </select>
+        <span asp-validation-for="Offer.Type" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Offer.LocationId"></label>
+        <select asp-for="Offer.LocationId" class="form-control">
+            <option value="">Sélectionnez la localisation</option>
+            @foreach (var location in Model.Locations)
+            {
+                <option value="@location.LocationId">@location.Address</option>
+            }
+        </select>
+        <span asp-validation-for="Offer.LocationId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Offer.Price"></label>
+        <input asp-for="Offer.Price" class="form-control" />
+        <span asp-validation-for="Offer.Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Offer.Surface"></label>
+        <input asp-for="Offer.Surface" class="form-control" />
+        <span asp-validation-for="Offer.Surface" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Offer.Description"></label>
+        <textarea asp-for="Offer.Description" class="form-control"></textarea>
+        <span asp-validation-for="Offer.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Offer.RentOrSale"></label>
+        <select asp-for="Offer.RentOrSale" class="form-control">
+            <option value="">Sélectionnez l'option</option>
+            @foreach (var rentOrSale in Enum.GetValues(typeof(RentOrSale)))
+            {
+                <option value="@rentOrSale">@rentOrSale</option>
+            }
+        </select>
+        <span asp-validation-for="Offer.RentOrSale" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-page="./Detail" asp-route-id="@Model.Offer.OfferId" class="btn btn-secondary">Annuler</a>
+</form>

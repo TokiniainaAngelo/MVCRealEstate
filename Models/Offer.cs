@@ -29,7 +29,8 @@ namespace MVCRealEstate.Models
 
 	public class Offer
     {
-        public int OfferId { get; set; }
+		[Key]
+		public int OfferId { get; set; }
 
         [Required]
         public required string Reference { get; set; }

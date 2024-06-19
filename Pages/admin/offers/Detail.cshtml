@@ -16,4 +16,5 @@
     <p>Description: @Model.Offer.Description</p>
     <p>Créé le: @Model.Offer.CreatedAt</p>
     <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary">Modifier</a>
 </div>
