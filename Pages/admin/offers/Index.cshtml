@@ -1,4 +1,5 @@
 ﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model MVCRealEstate.Pages.admin.offers.IndexModel
 @{
 	ViewData["Title"] = "Liste des Offres";
@@ -35,7 +36,7 @@
 							<td>@offer.Location?.City</td>
 							<td>@offer.Description</td>
 							<td>
-								<a asp-page="./OfferDetails" asp-route-id="@offer.OfferId" class="btn btn-primary">Voir</a>
+								<a asp-page="./Detail" asp-route-id="@offer.OfferId" class="btn btn-primary">Voir</a>
 							</td>
 						</tr>
 					}
