@@ -67,6 +67,17 @@
         </select>
         <span asp-validation-for="Offer.RentOrSale" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label>Images actuelles:</label>
+        <br />
+        @foreach (var media in Model.OfferMedias)
+        {
+            <img src="~/@media.Path" alt="">
+        }
+        <br />
+        <label>Nouvelles images:</label>
+        <input type="file" name="OfferMediaFiles" multiple class="form-control-file" />
+    </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
     <a asp-page="./Detail" asp-route-id="@Model.Offer.OfferId" class="btn btn-secondary">Annuler</a>
 </form>

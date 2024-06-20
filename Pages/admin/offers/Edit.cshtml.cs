@@ -18,6 +18,11 @@ namespace MVCRealEstate.Pages.admin.offers
         [BindProperty]
         public Offer Offer { get; set; }
         public List<Location> Locations { get; set; }
+        public List<OfferMedia> OfferMedias { get; set; }
+
+        [BindProperty]
+        public IFormFileCollection OfferMediaFiles { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -28,7 +33,9 @@ namespace MVCRealEstate.Pages.admin.offers
             {
                 return NotFound();
             }
-
+            OfferMedias = await _context.OfferMedia
+                .Where(o => Offer.OfferMediaId.Contains(o.OfferMediaId))
+                .ToListAsync();
             return Page();
         }
 
@@ -54,6 +61,31 @@ namespace MVCRealEstate.Pages.admin.offers
             if (offerToUpdate == null)
             {
                 return NotFound();
+            }
+
+            // Handle file uploads
+            if (OfferMediaFiles != null && OfferMediaFiles.Count > 0)
+            {
+                foreach (var file in OfferMediaFiles)
+                {
+                    var offerMedia = new OfferMedia
+                    {
+                        Path = Path.Combine("uploads", file.FileName),
+                        Type = "img"
+                    };
+
+                    // Save file to the server
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", file.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    _context.OfferMedia.Add(offerMedia);
+                    await _context.SaveChangesAsync();
+                    offerToUpdate.OfferMediaId.Add(offerMedia.OfferMediaId);
+                }
+
             }
 
             offerToUpdate.Reference = Offer.Reference;
