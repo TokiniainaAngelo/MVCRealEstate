@@ -1,5 +1,6 @@
 ﻿@page "{id:int}"
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using MVCRealEstate.Models
 @model MVCRealEstate.Pages.admin.offers.DetailModel
 @{
 	ViewData["Title"] = "Détail de l'offre";
@@ -8,13 +9,21 @@
 <h1>Détails de l'Offre</h1>
 
 <div>
-    <h2>@Model.Offer.Reference</h2>
-    <p>Type: @Model.Offer.Type</p>
-    <p>Prix: @Model.Offer.Price</p>
-    <p>Surface: @Model.Offer.Surface</p>
-    <p>Location: @Model.Offer.Location?.Address</p>
-    <p>Description: @Model.Offer.Description</p>
-    <p>Créé le: @Model.Offer.CreatedAt</p>
-    <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
-    <a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary">Modifier</a>
+	<h2>@Model.Offer.Reference</h2>
+	<p>Type: @Model.Offer.Type</p>
+	<p>Prix: @Model.Offer.Price</p>
+	<p>Surface: @Model.Offer.Surface</p>
+	<p>Location: @Model.Offer.Location?.Address</p>
+	<p>Description: @Model.Offer.Description</p>
+	<p>Créé le: @Model.Offer.CreatedAt</p>
+	<p>
+		Images @foreach (var media in Model.OfferMedias)
+		{
+			<img src="~/@media.Path" alt="">
+		}
+	</p>
+	
+	
+	<a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
+	<a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary">Modifier</a>
 </div>

@@ -20,6 +20,8 @@ namespace MVCRealEstate.Pages.admin.offers
         public List<Location> Locations { get; set; }
         public List<OwnerInfo> OwnerInfos { get; set; }
 
+        [BindProperty]
+        public IFormFileCollection OfferMediaFiles { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             Locations = await _context.Location.ToListAsync();
@@ -39,8 +41,55 @@ namespace MVCRealEstate.Pages.admin.offers
                 return Page();
             }
 
-            _context.Offer.Add(Offer);
+
+            // Initialize the OfferMediaId list if null
+            if (Offer.OfferMediaId == null)
+            {
+                Offer.OfferMediaId = new List<int>();
+            }
+
+            // Handle file uploads
+            // Handle file uploads
+            if (OfferMediaFiles != null && OfferMediaFiles.Count > 0)
+            {
+                // Ensure the directory exists
+                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                if (!Directory.Exists(uploadsFolderPath))
+                {
+                    Directory.CreateDirectory(uploadsFolderPath);
+                }
+
+                foreach (var file in OfferMediaFiles)
+                {
+                    // Save file to the server
+                    var filePath = Path.Combine(uploadsFolderPath, file.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    var offerMedia = new OfferMedia
+                    {
+                        Path = Path.Combine("uploads", file.FileName),
+                        Type = "img"
+                    };
+
+                    // Add to OfferMedias list
+                    _context.OfferMedia.Add(offerMedia);
+                    await _context.SaveChangesAsync();  // Save to generate the ID
+
+                    // Add the generated ID to Offer.OfferMediaId
+                    Offer.OfferMediaId.Add(offerMedia.OfferMediaId);
+                }
+
+               /* // Update the Offer with the new OfferMediaIds
+                _context.Offer.Update(Offer);
+                await _context.SaveChangesAsync();*/
+            }
+            Offer.CreatedAt = new DateTime();
+             _context.Offer.Add(Offer);
             await _context.SaveChangesAsync();
+
 
             return RedirectToPage("./Detail", new { id = Offer.OfferId });
         }

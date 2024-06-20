@@ -47,7 +47,7 @@ namespace MVCRealEstate.Models
         [StringLength(300)]
         public required string Description { get; set; }
 
-        public List<int>? OfferMediaId { get; set; }
+        public List<int>? OfferMediaId { get; set; } = new List<int>();
         public List<OfferMedia>? OfferMedias { get; set; }
 
         [Required]
@@ -75,6 +75,6 @@ namespace MVCRealEstate.Models
         public OwnerInfo? OwnerInfo { get; set; }
 
         [Required]
-        public required DateTime CreatedAt { get; set; }
+        public required DateTime CreatedAt { get; set; } = new DateTime();
     }
 }

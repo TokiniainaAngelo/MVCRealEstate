@@ -16,6 +16,7 @@ namespace MVCRealEstate.Pages.admin.offers
 		}
 
 		public Offer Offer { get; set; }
+		public List<OfferMedia> OfferMedias { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
@@ -35,6 +36,10 @@ namespace MVCRealEstate.Pages.admin.offers
 			{
 				return NotFound();
 			}
+
+			OfferMedias = await _context.OfferMedia
+				.Where(o => Offer.OfferMediaId.Contains(o.OfferMediaId))
+				.ToListAsync();
 			return Page();
 		}
 	}

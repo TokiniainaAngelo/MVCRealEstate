@@ -22,7 +22,7 @@ namespace MVCRealEstate.Pages.admin.offers
                 .Include(o => o.Location)
                 .Include(o => o.Agency)
                 .Include(o => o.OwnerInfo)
-                .ToListAsync();
+				.ToListAsync();
         }
     }
 }
