@@ -33,6 +33,12 @@
                             <p>Offres</p>
                         </a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-page="/admin/locations/Index">
+                            <i class="nc-icon nc-chart-pie-35"></i>
+                            <p>Adresses</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -154,6 +160,7 @@
     <script src="~/admin/js/chartist.min.js"></script>
     <script src="~/admin/js/bootstrap-notify.js"></script>
     <script src="~/admin/js/light-bootstrap-dashboard.js?v=2.0.0" type="text/javascript"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
 
