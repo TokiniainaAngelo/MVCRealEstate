@@ -26,4 +26,8 @@
 	
 	<a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
 	<a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary">Modifier</a>
+	<!-- Bouton de suppression -->
+	<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Offer.OfferId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
+		<button type="submit" class="btn btn-danger">Supprimer</button>
+	</form>
 </div>

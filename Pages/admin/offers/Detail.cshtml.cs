@@ -42,5 +42,20 @@ namespace MVCRealEstate.Pages.admin.offers
 				.ToListAsync();
 			return Page();
 		}
+
+		public async Task<IActionResult> OnPostDeleteAsync(int id)
+		{
+			var offer = await _context.Offer.FindAsync(id);
+
+			if (offer == null)
+			{
+				return NotFound();
+			}
+
+			_context.Offer.Remove(offer);
+			await _context.SaveChangesAsync();
+
+			return RedirectToPage("./Index");
+		}
 	}
 }
