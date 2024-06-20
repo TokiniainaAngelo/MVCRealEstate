@@ -42,17 +42,13 @@ namespace MVCRealEstate.Pages.admin.offers
             }
 
 
-            // Initialize the OfferMediaId list if null
             if (Offer.OfferMediaId == null)
             {
                 Offer.OfferMediaId = new List<int>();
             }
 
-            // Handle file uploads
-            // Handle file uploads
             if (OfferMediaFiles != null && OfferMediaFiles.Count > 0)
             {
-                // Ensure the directory exists
                 var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
                 if (!Directory.Exists(uploadsFolderPath))
                 {
@@ -61,7 +57,6 @@ namespace MVCRealEstate.Pages.admin.offers
 
                 foreach (var file in OfferMediaFiles)
                 {
-                    // Save file to the server
                     var filePath = Path.Combine(uploadsFolderPath, file.FileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -74,19 +69,13 @@ namespace MVCRealEstate.Pages.admin.offers
                         Type = "img"
                     };
 
-                    // Add to OfferMedias list
                     _context.OfferMedia.Add(offerMedia);
-                    await _context.SaveChangesAsync();  // Save to generate the ID
-
-                    // Add the generated ID to Offer.OfferMediaId
+                    await _context.SaveChangesAsync();  
                     Offer.OfferMediaId.Add(offerMedia.OfferMediaId);
                 }
 
-               /* // Update the Offer with the new OfferMediaIds
-                _context.Offer.Update(Offer);
-                await _context.SaveChangesAsync();*/
             }
-            Offer.CreatedAt = new DateTime();
+            Offer.CreatedAt = DateTime.Now;
              _context.Offer.Add(Offer);
             await _context.SaveChangesAsync();
 
