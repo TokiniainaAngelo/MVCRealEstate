@@ -1,0 +1,64 @@
+﻿@page "{current:int?}"
+@model MVCRealEstate.Pages.admin.users.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+	ViewData["Title"] = "Liste des utilisateurs";
+	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+<div class="col-md-12">
+	<div class="card">
+		<div class="header">
+			<h4 class="title">Liste des adresses</h4>
+			<p class="category"><a asp-page="./Create" class="btn btn-primary">Ajouter</a></p>
+		</div>
+		<div class="content table-responsive table-full-width">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th>Prénom</th>
+						<th>Nom</th>
+						<th>Login</th>
+						<th>Type</th>
+						<th>Email</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					 @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@user.Login</td>
+                            <td>@user.Type</td>
+                            <td>@user.Email</td>
+                            <td>
+                                <a asp-page="./Detail" asp-route-id="@user.UserId" class="btn btn-primary">Voir</a>
+                               
+                            </td>
+                        </tr>
+                    }
+				</tbody>
+			</table>
+
+			<!-- Pagination -->
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center">
+					<li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+						<a class="page-link" asp-page="./Index" asp-route-current="1">&laquo;</a>
+					</li>
+					@for (int i = 1; i <= Model.TotalPages; i++)
+					{
+						<li class="page-item @(Model.PageIndex == i ? "active" : "")">
+							<a class="page-link" asp-page="./Index" asp-route-current="@i">@i</a>
+						</li>
+					}
+					<li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+						<a class="page-link" asp-page="./Index" asp-route-current="@Model.TotalPages">&raquo;</a>
+					</li>
+				</ul>
+			</nav>
+
+		</div>
+	</div>
+</div>

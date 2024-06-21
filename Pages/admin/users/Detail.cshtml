@@ -1,0 +1,28 @@
+﻿@page "{id:int}"
+@model MVCRealEstate.Pages.admin.users.DetailModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+	ViewData["Title"] = "Détail de l'utilisateurs";
+	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+<h1>Détail de l'utilisateur</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>@Model.User.FullName</h2>
+    </div>
+    <div class="card-body">
+        <p><strong>Prénom:</strong> @Model.User.FirstName</p>
+        <p><strong>Nom:</strong> @Model.User.LastName</p>
+        <p><strong>Login:</strong> @Model.User.Login</p>
+        <p><strong>Email:</strong> @Model.User.Email</p>
+        <p><strong>Type:</strong> @Model.User.Type</p>
+    </div>
+    <div class="card-footer">
+        <a asp-page="./Edit" asp-route-id="@Model.User.UserId" class="btn btn-primary">Modifier</a>
+        <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
+        <form method="post" asp-page-handler="Delete" asp-route-id="@Model.User.UserId" style="display:inline">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</button>
+        </form>
+    </div>
+</div>
