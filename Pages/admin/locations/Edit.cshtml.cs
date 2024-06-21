@@ -1,12 +1,68 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using MVCRealEstate.Data;
+using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.locations
 {
     public class EditModel : PageModel
     {
-        public void OnGet()
+        private readonly MVCRealEstateContext _context;
+
+        public EditModel(MVCRealEstateContext context)
         {
+            _context = context;
+        }
+
+        [BindProperty]
+        public Location Location { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
+            Location = await _context.Location.FindAsync(id);
+
+            if (Location == null)
+            {
+                return NotFound();
+            }
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+       
+            _context.Attach(Location).State = EntityState.Modified;
+
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!LocationExists(Location.LocationId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToPage("./Index");
+        }
+
+        private bool LocationExists(int id)
+        {
+            return _context.Location.Any(e => e.LocationId == id);
         }
     }
 }
