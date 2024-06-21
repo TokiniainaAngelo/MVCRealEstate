@@ -7,6 +7,13 @@
 }
 <h1>Détail du Propriétaire</h1>
 
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+
 <div>
     <h2>@Model.OwnerInfo.FullName</h2>
     <p>Prénom: @Model.OwnerInfo.FirstName</p>

@@ -16,6 +16,8 @@ namespace MVCRealEstate.Pages.admin.owners
         }
 
         public OwnerInfo OwnerInfo { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -30,14 +32,23 @@ namespace MVCRealEstate.Pages.admin.owners
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-
             var owner = await _context.OwnerInfo.FindAsync(id);
-            if (owner != null)
+            if (owner == null)
             {
-                _context.OwnerInfo.Remove(owner);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            return RedirectToPage();
+
+            var offersWithOwner = await _context.Offer.AnyAsync(o => o.OwnerInfoId == id);
+            if (offersWithOwner)
+            {
+                ErrorMessage = "Le propriétaire ne peut pas être supprimé car des offres sont associées à lui.";
+                return RedirectToPage(new { id = id });
+            }
+
+            _context.OwnerInfo.Remove(owner);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
