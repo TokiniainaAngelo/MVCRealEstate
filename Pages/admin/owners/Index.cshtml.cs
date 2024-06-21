@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
 using MVCRealEstate.Models;
 
-namespace MVCRealEstate.Pages.admin.locations
+namespace MVCRealEstate.Pages.admin.owners
 {
     public class IndexModel : PageModel
     {
@@ -15,7 +15,7 @@ namespace MVCRealEstate.Pages.admin.locations
 			_context = context;
 		}
 
-		public IList<Location> Locations { get; set; }
+		public IList<OwnerInfo> Owners { get; set; }
 		public int PageIndex { get; set; } = 1;
 		public int TotalPages { get; set; }
 		public const int PageSize = 5;
@@ -24,10 +24,9 @@ namespace MVCRealEstate.Pages.admin.locations
 		{
 			PageIndex = current ?? 1;
 
-			var count = await _context.Offer.CountAsync();
+			var count = await _context.OwnerInfo.CountAsync();
 			TotalPages = (int)Math.Ceiling(count / (double)PageSize);
-
-			Locations = await _context.Location.Skip((PageIndex - 1) * PageSize)
+			Owners = await _context.OwnerInfo.Skip((PageIndex - 1) * PageSize)
 				.Take(PageSize)
 				.ToListAsync();
 		}
