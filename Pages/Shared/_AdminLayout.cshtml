@@ -1,4 +1,7 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    string imageUrl = "/medias/sidebar-5.jpg";
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +17,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="blue">
+        <div class="sidebar" data-image="@Url.Content(imageUrl)" data-color="blue">
             <!--
                 Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -22,8 +25,8 @@
             -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="http://www.creative-tim.com" class="simple-text">
-                        Creative Tim
+                    <a asp-page="/admin/offers/Index" class="simple-text">
+                       Real estate agency
                     </a>
                 </div>
                 <ul class="nav">
