@@ -1,0 +1,45 @@
+﻿@page
+@model MVCRealEstate.Pages.admin.appointments.CreateModel
+@{
+    ViewData["Title"] = "Créer un Rendez-vous";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Créer un Rendez-vous</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Appointment.OfferId"></label>
+        <select asp-for="Appointment.OfferId" class="form-control">
+            <option value="">Sélectionnez une offre</option>
+            @foreach (var offer in Model.Offers)
+            {
+                <option value="@offer.OfferId">@offer.Reference</option>
+            }
+        </select>
+        <span asp-validation-for="Appointment.OfferId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Appointment.Period"></label>
+        <input asp-for="Appointment.Period" type="datetime-local" class="form-control" id="period" />
+        <span asp-validation-for="Appointment.Period" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Créer</button>
+    <a asp-page="./Index" class="btn btn-secondary">Annuler</a>
+</form>
+@section Scripts {
+    <script>
+
+        function formatDateToISO(date) {
+            var isoDate = date.toISOString().slice(0, 16);
+            return isoDate; 
+        }
+
+        var currentDate = new Date();
+        var formattedDate = formatDateToISO(currentDate);
+
+        document.getElementById("period").value = formattedDate;
+    </script>
+}
