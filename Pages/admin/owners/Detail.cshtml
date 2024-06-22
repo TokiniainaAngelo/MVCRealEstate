@@ -13,25 +13,28 @@
         @Model.ErrorMessage
     </div>
 }
+<div class="text-right mt-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+    <a asp-page="./Edit" asp-route-id="@Model.OwnerInfo.OwnerInfoId" class="btn btn-primary mr-2">Modifier</a>
 
+    <form method="post" asp-page-handler="Delete" asp-route-id="@Model.OwnerInfo.OwnerInfoId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+    </form>
+    <a asp-page="./Index" class="btn btn-secondary mr-2">Retour à la liste</a>
+</div>
 <div>
-    <h2>@Model.OwnerInfo.FullName</h2>
-    <p>Prénom: @Model.OwnerInfo.FirstName</p>
-    <p>Nom: @Model.OwnerInfo.LastName</p>
-    <p>Email: @Model.OwnerInfo.Email</p>
-    <p>Adresse: @Model.OwnerInfo.Address</p>
-    <p>
-        Téléphones:
-        @foreach (var phone in Model.OwnerInfo.Phones)
-        {
-            <div>@phone</div>
-        }
-    </p>
-    <p>
-        <a asp-page="./Edit" asp-route-id="@Model.OwnerInfo.OwnerInfoId" class="btn btn-primary">Modifier</a>
-        <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
-        <form method="post" asp-page-handler="Delete" asp-route-id="@Model.OwnerInfo.OwnerInfoId" style="display:inline;">
-            <button type="submit" class="btn btn-danger">Supprimer</button>
-        </form>
-    </p>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Prénom:</strong> @Model.OwnerInfo.FirstName</li>
+        <li class="list-group-item"><strong>Nom:</strong> @Model.OwnerInfo.LastName</li>
+        <li class="list-group-item"><strong>Email:</strong> @Model.OwnerInfo.Email</li>
+        <li class="list-group-item"><strong>Adresse:</strong> @Model.OwnerInfo.Address</li>
+        <li class="list-group-item">
+            <strong>Téléphones:</strong>
+            <ul class="list-unstyled">
+                @foreach (var phone in Model.OwnerInfo.Phones)
+                {
+                    <li>@phone</li>
+                }
+            </ul>
+        </li>
+    </ul>
 </div>
