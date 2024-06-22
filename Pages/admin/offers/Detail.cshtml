@@ -6,28 +6,54 @@
 	ViewData["Title"] = "Détail de l'offre";
 	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
-<h1>Détails de l'Offre</h1>
+<div class="container">
+	<h1 class="mb-4 text-primary">@Model.Offer.Reference</h1>
+	<div class="text-right mt-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+		<a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary mr-2">Modifier</a>
 
-<div>
-	<h2>@Model.Offer.Reference</h2>
-	<p>Type: @Model.Offer.Type</p>
-	<p>Prix: @Model.Offer.Price</p>
-	<p>Surface: @Model.Offer.Surface</p>
-	<p>Location: @Model.Offer.Location?.Address</p>
-	<p>Description: @Model.Offer.Description</p>
-	<p>Créé le: @Model.Offer.CreatedAt</p>
-	<p>
-		Images @foreach (var media in Model.OfferMedias)
-		{
-			<img src="~/@media.Path" alt="">
-		}
-	</p>
+		<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Offer.OfferId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
+			<button type="submit" class="btn btn-danger">Supprimer</button>
+		</form>
+		<a asp-page="./Index" class="btn btn-secondary mr-2">Retour à la liste</a>
+
+	</div>
 	
-	
-	<a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
-	<a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary">Modifier</a>
-	<!-- Bouton de suppression -->
-	<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Offer.OfferId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
-		<button type="submit" class="btn btn-danger">Supprimer</button>
-	</form>
+	<div style="display:flex;flex-direction:column;gap:20px;">
+		<div>
+			<div class="text-center" style="display:grid;grid-template-columns: repeat(3,30%);justify-content:space-between;">
+				@foreach (var media in Model.OfferMedias)
+				{
+					<img src="~/@media.Path" class="img-fluid mb-3" alt="" style="width:100%;height:200px;object-fit:contain;">
+				}
+			</div>
+		</div>
+		<div>
+			<h3>Informations</h3>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item"><strong>Type:</strong> @Model.Offer.Type</li>
+				<li class="list-group-item"><strong>Prix:</strong> @Model.Offer.Price</li>
+				<li class="list-group-item"><strong>Surface:</strong> @Model.Offer.Surface</li>
+				<li class="list-group-item"><strong>Location:</strong> @Model.Offer.Location?.Address</li>
+				<li class="list-group-item"><strong>Description:</strong> @Model.Offer.Description</li>
+				<li class="list-group-item"><strong>Créé le:</strong> @Model.Offer.CreatedAt.ToString("dd/MM/yyyy HH:mm")</li>
+			</ul>
+			<h3>Localisation</h3>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item"><strong>Ville:</strong> @Model.Offer.Location.City</li>
+				<li class="list-group-item"><strong>Adresse:</strong> @Model.Offer.Location.Address</li>
+			</ul>
+			<h3>Propriétaire</h3>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item"><strong>Nom:</strong> @Model.Offer.OwnerInfo.FirstName @Model.Offer.OwnerInfo.LastName</li>
+				<li class="list-group-item"><strong>Email:</strong> @Model.Offer.OwnerInfo.Email</li>
+				<li class="list-group-item">
+					<strong>Téléphone(s):</strong>@foreach (var phone in Model.Offer.OwnerInfo.Phones)
+					{
+						<div>@phone</div>
+					}
+				</li>
+			</ul>
+			
+		</div>
+	</div>
 </div>

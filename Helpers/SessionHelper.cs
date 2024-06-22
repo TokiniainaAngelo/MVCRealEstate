@@ -9,7 +9,7 @@ namespace MVCRealEstate.Helpers
         {
             var username = pageModel.HttpContext.Session.GetString("UserLogin");
             var userType = pageModel.HttpContext.Session.GetString("UserRole");
-            if (string.IsNullOrEmpty(username) && userType !="Admin")
+            if (string.IsNullOrEmpty(username) && userType != "Admin")
             {
                 return pageModel.RedirectToPage("/admin/Login");
             }
