@@ -7,7 +7,11 @@
 }
 <div class="col-md-12">
 	<div class="card">
-		<div class="header">
+		<div class="header" style="
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			">
 			<h4 class="title">Liste des utilisateurs</h4>
 			<p class="category"><a asp-page="./Create" class="btn btn-primary">Ajouter</a></p>
 		</div>
@@ -20,7 +24,7 @@
 						<th>Login</th>
 						<th>Type</th>
 						<th>Email</th>
-						<th>Actions</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,7 +46,7 @@
 			</table>
 
 			<!-- Pagination -->
-			<nav aria-label="Page navigation">
+			<nav aria-label="Page navigation" style="display:flex;flex-direction:column;align-items:center">
 				<ul class="pagination justify-content-center">
 					<li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
 						<a class="page-link" asp-page="./Index" asp-route-current="1">&laquo;</a>
