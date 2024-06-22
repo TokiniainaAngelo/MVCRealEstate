@@ -6,23 +6,20 @@
 	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 <h1>Détail de l'utilisateur</h1>
+<div class="text-right mt-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+    <a asp-page="./Edit" asp-route-id="@Model.User.UserId" class="btn btn-primary mr-2">Modifier</a>
 
-<div class="card">
-    <div class="card-header">
-        <h2>@Model.User.FullName</h2>
-    </div>
-    <div class="card-body">
-        <p><strong>Prénom:</strong> @Model.User.FirstName</p>
-        <p><strong>Nom:</strong> @Model.User.LastName</p>
-        <p><strong>Login:</strong> @Model.User.Login</p>
-        <p><strong>Email:</strong> @Model.User.Email</p>
-        <p><strong>Type:</strong> @Model.User.Type</p>
-    </div>
-    <div class="card-footer">
-        <a asp-page="./Edit" asp-route-id="@Model.User.UserId" class="btn btn-primary">Modifier</a>
-        <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
-        <form method="post" asp-page-handler="Delete" asp-route-id="@Model.User.UserId" style="display:inline">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</button>
-        </form>
-    </div>
+    <form method="post" asp-page-handler="Delete" asp-route-id="@Model.User.UserId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+    </form>
+    <a asp-page="./Index" class="btn btn-secondary mr-2">Retour à la liste</a>
+</div>
+<div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Prénom:</strong> @Model.User.FirstName</li>
+        <li class="list-group-item"><strong>Nom:</strong> @Model.User.LastName</li>
+        <li class="list-group-item"><strong>Login:</strong> @Model.User.Login</li>
+        <li class="list-group-item"><strong>Email:</strong> @Model.User.Email</li>
+        <li class="list-group-item"><strong>Type:</strong> @Model.User.Type</li>
+    </ul>
 </div>

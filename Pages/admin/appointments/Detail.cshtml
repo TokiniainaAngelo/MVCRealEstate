@@ -8,25 +8,7 @@
 	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 <h1>Détails du Rendez-vous</h1>
-
-<div class="row">
-    <p class="col-sm-3">ID du Rendez-vous</p>
-    <p class="col-sm-9">@Model.Appointment.AppointmentId</p>
-
-    <p class="col-sm-3">Utilisateur</p>
-    <p class="col-sm-9">@Model.Appointment.User?.FullName</p>
-
-    <p class="col-sm-3">Offre</p>
-    <p class="col-sm-9">@Model.Appointment.Offer?.Reference</p>
-
-    <p class="col-sm-3">Période</p>
-    <p class="col-sm-9">@Model.Appointment.Period.ToString("dd/MM/yyyy HH:mm")</p>
-
-    <p class="col-sm-3">Réservé</p>
-    <p class="col-sm-9">@(Model.Appointment.IsBooked ? "Oui" : "Non")</p>
-</div>
-
-<div class="row">
+<div class="text-right mt-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
     <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
     @if (!Model.Appointment.IsBooked)
     {
@@ -34,4 +16,24 @@
             <button type="submit" class="btn btn-danger">Supprimer</button>
         </form>
     }
-</di>
+</div>
+<div>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <strong>ID du Rendez-vous:</strong> @Model.Appointment.AppointmentId
+        </li>
+        <li class="list-group-item">
+            <strong>Utilisateur:</strong> @Model.Appointment.User?.FullName
+        </li>
+        <li class="list-group-item">
+            <strong>Offre:</strong> @Model.Appointment.Offer?.Reference
+        </li>
+        <li class="list-group-item">
+            <strong>Période:</strong> @Model.Appointment.Period.ToString("dd/MM/yyyy HH:mm")
+        </li>
+        <li class="list-group-item">
+            <strong>Réservé:</strong> @(Model.Appointment.IsBooked ? "Oui" : "Non")
+        </li>
+    </ul>
+</div>
+
