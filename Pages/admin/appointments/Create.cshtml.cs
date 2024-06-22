@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.appointments
@@ -22,6 +23,11 @@ namespace MVCRealEstate.Pages.admin.appointments
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
             Offers = await _context.Offer.ToListAsync();
             Appointment = new Appointment
             {

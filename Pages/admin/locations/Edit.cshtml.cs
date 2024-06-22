@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.locations
@@ -20,6 +21,12 @@ namespace MVCRealEstate.Pages.admin.locations
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
+
             Location = await _context.Location.FindAsync(id);
 
             if (Location == null)

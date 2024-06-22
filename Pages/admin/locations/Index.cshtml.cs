@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.locations
@@ -20,16 +21,25 @@ namespace MVCRealEstate.Pages.admin.locations
 		public int TotalPages { get; set; }
 		public const int PageSize = 5;
 
-		public async Task OnGetAsync(int? current)
-		{
-			PageIndex = current ?? 1;
+        public async Task<IActionResult> OnGetAsync(int? current)
+        {
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
 
-			var count = await _context.Offer.CountAsync();
-			TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+            PageIndex = current ?? 1;
 
-			Locations = await _context.Location.Skip((PageIndex - 1) * PageSize)
-				.Take(PageSize)
-				.ToListAsync();
-		}
-	}
+            var count = await _context.Location.CountAsync();
+            TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            Locations = await _context.Location
+                .Skip((PageIndex - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+
+            return Page();
+        }
+    }
 }

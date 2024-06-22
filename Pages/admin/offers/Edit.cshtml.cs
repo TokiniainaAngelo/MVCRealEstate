@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.offers
@@ -26,6 +27,12 @@ namespace MVCRealEstate.Pages.admin.offers
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
+
             Offer = await _context.Offer.FirstOrDefaultAsync(m => m.OfferId == id);
             Locations = await _context.Location.ToListAsync();
 

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.users
@@ -19,6 +20,12 @@ namespace MVCRealEstate.Pages.admin.users
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
+
             User = await _context.User.FirstOrDefaultAsync(m => m.UserId == id);
 
             if (User == null)

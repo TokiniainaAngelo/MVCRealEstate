@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.offers
@@ -24,6 +25,11 @@ namespace MVCRealEstate.Pages.admin.offers
         public IFormFileCollection OfferMediaFiles { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
             Locations = await _context.Location.ToListAsync();
             OwnerInfos = await _context.OwnerInfo.ToListAsync();
             return Page();

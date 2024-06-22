@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.offers
@@ -20,7 +21,13 @@ namespace MVCRealEstate.Pages.admin.offers
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
-			if (id == null)
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
+
+            if (id == null)
 			{
 				return NotFound();
 			}

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MVCRealEstate.Data;
+using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -23,6 +24,11 @@ namespace MVCRealEstate.Pages.admin.owners
 
         public async Task<IActionResult> OnGetAsync(int id)
 		{
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
             OwnerInfo = await _context.OwnerInfo.FindAsync(id);
 
             if (OwnerInfo == null)
