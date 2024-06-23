@@ -23,10 +23,10 @@
 	
 	<div style="display:flex;flex-direction:column;gap:20px;">
 		<div>
-			<div class="text-center" style="display:grid;grid-template-columns: repeat(3,30%);justify-content:space-between;">
+			<div class="text-center" style="display:flex;flex-direction:row;gap:10px;flex-wrap:wrap;">
 				@foreach (var media in Model.OfferMedias)
 				{
-					<img src="~/@media.Path" class="img-fluid mb-3" alt="" style="width:100%;height:200px;object-fit:contain;">
+					<img src="~/@media.Path" class="img-fluid mb-3" alt="" style="width:fit-content;height:200px;object-fit:contain;">
 				}
 			</div>
 		</div>

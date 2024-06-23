@@ -27,8 +27,7 @@
 						<th>Type</th>
 						<th>Prix</th>
 						<th>Surface</th>
-						<th>Location</th>
-						<th>Description</th>
+						<th>Localisation</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -41,7 +40,6 @@
 							<td>@offer.Price</td>
 							<td>@offer.Surface</td>
 							<td>@offer.Location?.City</td>
-							<td>@offer.Description</td>
 							<td>
 								<a asp-page="./Detail" asp-route-id="@offer.OfferId" class="btn btn-primary">Voir</a>
 							</td>
