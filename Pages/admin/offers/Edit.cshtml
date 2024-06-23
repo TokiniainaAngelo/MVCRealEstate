@@ -8,7 +8,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <h1>Modifier l'Offre</h1>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Offer.OfferId">Id</label>
         <input asp-for="Offer.OfferId" class="form-control" disbaled="true"/>
@@ -70,15 +70,18 @@
     <div class="form-group">
         <label>Images actuelles:</label>
         <br />
-        <div class="text-center" style="display:grid;grid-template-columns: repeat(3,30%);justify-content:space-between;">
+        <div class="text-center" style="display:flex;flex-direction:row;gap:10px;flex-wrap:wrap;">
             @foreach (var media in Model.OfferMedias)
             {
-                <img src="~/@media.Path" class="img-fluid mb-3" alt="" style="width:100%;height:200px;object-fit:contain;">
+                <img src="~/@media.Path" class="img-fluid mb-3" alt="" style="width:fit-content;height:200px;object-fit:contain;">
             }
         </div>
         <br />
         <label>Nouvelles images:</label>
-        <input type="file" name="OfferMediaFiles" multiple class="form-control-file" />
+        <div class="form-group">
+            <label for="offerMediaFiles">Upload Media</label>
+            <input type="file" id="OfferMediaFiles" name="OfferMediaFiles" class="form-control" multiple />
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
     <a asp-page="./Detail" asp-route-id="@Model.Offer.OfferId" class="btn btn-secondary">Annuler</a>

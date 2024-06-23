@@ -69,28 +69,33 @@ namespace MVCRealEstate.Pages.admin.offers
             {
                 return NotFound();
             }
+            var OfferMediaIds = offerToUpdate.OfferMediaId;
 
-            // Handle file uploads
             if (OfferMediaFiles != null && OfferMediaFiles.Count > 0)
             {
+                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                if (!Directory.Exists(uploadsFolderPath))
+                {
+                    Directory.CreateDirectory(uploadsFolderPath);
+                }
+
                 foreach (var file in OfferMediaFiles)
                 {
+                    var filePath = Path.Combine(uploadsFolderPath, file.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
                     var offerMedia = new OfferMedia
                     {
                         Path = Path.Combine("uploads", file.FileName),
                         Type = "img"
                     };
 
-                    // Save file to the server
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", file.FileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-
                     _context.OfferMedia.Add(offerMedia);
                     await _context.SaveChangesAsync();
-                    offerToUpdate.OfferMediaId.Add(offerMedia.OfferMediaId);
+                    OfferMediaIds.Add(offerMedia.OfferMediaId);
                 }
 
             }
@@ -102,22 +107,9 @@ namespace MVCRealEstate.Pages.admin.offers
             offerToUpdate.Description = Offer.Description;
             offerToUpdate.RentOrSale = Offer.RentOrSale;
             offerToUpdate.LocationId = Offer.LocationId;
+            offerToUpdate.OfferMediaId = OfferMediaIds;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OfferExists(Offer.OfferId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Detail", new { id = Offer.OfferId });
         }
