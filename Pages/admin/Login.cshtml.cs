@@ -60,6 +60,7 @@ namespace MVCRealEstate.Pages.admin
             // Set session variables
             HttpContext.Session.SetString("UserLogin", user.Login);
             HttpContext.Session.SetString("UserRole", user.Type);
+            HttpContext.Session.SetString("UserId", user.UserId.ToString());
 
             return RedirectToPage("/admin/Index");
         }

@@ -25,6 +25,11 @@
         <input asp-for="Appointment.Period" type="datetime-local" class="form-control" id="period" />
         <span asp-validation-for="Appointment.Period" class="text-danger"></span>
     </div>
+    <div class="form-group" style="display:none;">
+        <label asp-for="Appointment.UserId"></label>
+        <input asp-for="Appointment.UserId" type="text" class="form-control" id="period" />
+        <span asp-validation-for="Appointment.UserId" class="text-danger"></span>
+    </div>
 
     <button type="submit" class="btn btn-primary">Créer</button>
     <a asp-page="./Index" class="btn btn-secondary">Annuler</a>

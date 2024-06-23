@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
 using MVCRealEstate.Helpers;
+using MVCRealEstate.Migrations;
 using MVCRealEstate.Models;
 
 namespace MVCRealEstate.Pages.admin.appointments
@@ -29,10 +30,11 @@ namespace MVCRealEstate.Pages.admin.appointments
                 return redirectResult;
             }
             Offers = await _context.Offer.ToListAsync();
+            var userId = HttpContext.Session.GetString("UserId");
             Appointment = new Appointment
             {
                 IsBooked = false,
-                UserId = '1'
+                UserId = Int32.Parse(userId)
             };
 
             return Page();
