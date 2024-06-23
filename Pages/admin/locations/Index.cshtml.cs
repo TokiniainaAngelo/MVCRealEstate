@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
 using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
+using System.Globalization;
+using System.Text;
 
 namespace MVCRealEstate.Pages.admin.locations
 {
@@ -41,5 +43,51 @@ namespace MVCRealEstate.Pages.admin.locations
 
             return Page();
         }
-    }
+
+		public async Task<IActionResult> OnPostImportCSVAsync(IFormFile csvFile)
+		{
+			if (csvFile == null || csvFile.Length == 0)
+			{
+				ModelState.AddModelError(string.Empty, "Veuillez sélectionner un fichier CSV.");
+				return Page();
+			}
+
+			using (var reader = new StreamReader(csvFile.OpenReadStream(), Encoding.UTF8))
+			{
+				var lineNumber = 0;
+				while (!reader.EndOfStream)
+				{
+					var line = await reader.ReadLineAsync();
+					if (lineNumber == 0)
+					{
+						// Skip the header line
+						lineNumber++;
+						continue;
+					}
+
+					var values = line.Split(',');
+
+					if (values.Length < 4)
+					{
+						// Skip lines with insufficient data
+						continue;
+					}
+
+					var location = new Location
+					{
+						Address = values[0],
+						City = values[1],
+						latitude =values[2],
+						longitude = values[3],
+					};
+
+					_context.Location.Add(location);
+				}
+
+				await _context.SaveChangesAsync();
+			}
+
+			return RedirectToPage();
+		}
+	}
 }

@@ -40,5 +40,20 @@ namespace MVCRealEstate.Pages.admin.locations
 
 			return Page();
 		}
+		public async Task<IActionResult> OnPostDeleteAsync(int id)
+		{
+			var location = await _context.Location.FindAsync(id);
+
+			if (location == null)
+			{
+				return NotFound();
+			}
+
+			_context.Location.Remove(location);
+			await _context.SaveChangesAsync();
+
+			return RedirectToPage("./Index");
+		}
+
 	}
 }

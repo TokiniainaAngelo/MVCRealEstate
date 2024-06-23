@@ -10,7 +10,7 @@
 	<a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
 	<a asp-page="./Edit" asp-route-id="@Model.Location.LocationId" class="btn btn-primary">Modifier</a>
 	<!-- Bouton de suppression -->
-	<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Location.LocationId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
+	<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Location.LocationId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette adresse?');">
 		<button type="submit" class="btn btn-danger">Supprimer</button>
 	</form>
 </div>
