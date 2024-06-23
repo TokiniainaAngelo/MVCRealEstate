@@ -25,7 +25,7 @@ namespace MVCRealEstate.Pages.admin
         {
             if (HttpContext.Session.GetString("UserLogin") != null && HttpContext.Session.GetString("UserRole") == "Admin")
             {
-                return RedirectToPage("/admin/Offers");
+                return RedirectToPage("/admin/Offers/Index");
             }
             return Page();
         }
@@ -35,7 +35,7 @@ namespace MVCRealEstate.Pages.admin
 
             if(HttpContext.Session.GetString("UserRole") != null)
             {
-                return RedirectToPage("/admin/Offers");
+                return RedirectToPage("/admin/Offers/Index");
             }
 
             if (!ModelState.IsValid)
