@@ -148,19 +148,25 @@
 								</div>
 							</div>
 							<div class="col-sm-3" style="display:flex">
-								@foreach(var appointment in Model.Appointments)
+								@if (!string.IsNullOrEmpty((string)ViewData["Login"]))
 								{
-									<div class="col-md-12">
-										<button class="btn btn-b"
-												data-toggle="modal"
-												data-target="#appointmentModal"
-												data-appointment-id="@appointment.AppointmentId"
-												onclick="showModal(this);"
-												@(appointment.IsBooked ? "disabled" : "") 
-										>
-											@appointment.Period.ToString("dd MMMM yyyy HH:mm")
-										</button>
-									</div>
+									@foreach (var appointment in Model.Appointments)
+									{
+										<div class="col-md-12">
+											<button class="btn btn-b"
+													data-toggle="modal"
+													data-target="#appointmentModal"
+													data-appointment-id="@appointment.AppointmentId"
+													onclick="showModal(this);"
+											@(appointment.IsBooked ? "disabled" : "")>
+												@appointment.Period.ToString("dd MMMM yyyy HH:mm")
+											</button>
+										</div>
+									}
+								}
+								else
+								{
+									<p>Connectez-vous pour pouvoir prendre rendez-vous</p>
 								}
 							</div>
 						</div>

@@ -106,8 +106,9 @@
 			</div>
 		</div>
 		<div class="latest" style="
-				 display: flex;
+				 display: grid;
 				 gap: 5%;
+				 grid-template-columns: repeat(3,30%);
 						 ">
 			@foreach (var item in ViewData["Offers"] as List<Offer>)
 			{
