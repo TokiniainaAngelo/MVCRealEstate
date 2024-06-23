@@ -6,6 +6,12 @@
 	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+	<div class="alert alert-danger">
+		@Model.ErrorMessage
+	</div>
+}
 <div class="row" style="margin-bottom:20px;display:flex">
 	<div class="col-md-8"></div>
 	<div class="col-md-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">

@@ -17,6 +17,8 @@ namespace MVCRealEstate.Pages.admin.locations
 		}
 
 		public Location Location { get; set; }
+		public string ErrorMessage { get; set; }
+
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
@@ -47,6 +49,12 @@ namespace MVCRealEstate.Pages.admin.locations
 			if (location == null)
 			{
 				return NotFound();
+			}
+			var offersWithLocation = await _context.Offer.AnyAsync(o => o.LocationId == id);
+			if (offersWithLocation)
+			{
+				ErrorMessage = "Cette localisation est encore associée à une offre";
+				return RedirectToPage(new { id = id });
 			}
 
 			_context.Location.Remove(location);
