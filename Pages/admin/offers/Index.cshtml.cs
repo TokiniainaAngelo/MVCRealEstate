@@ -23,11 +23,11 @@ namespace MVCRealEstate.Pages.admin.offers
 
         public async Task<IActionResult> OnGetAsync(int? current)
         {
-           /* var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
+            var redirectResult = SessionHelper.RedirectIfNotLoggedIn(this);
             if (redirectResult != null)
             {
                 return redirectResult;
-            }*/
+            }
 
             PageIndex = current ?? 1;
 
