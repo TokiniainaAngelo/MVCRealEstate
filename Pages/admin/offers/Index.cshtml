@@ -14,7 +14,10 @@
 			justify-content: space-between;
 			">
 			<h4 class="title">Liste des offres</h4>
-			<p class="category"><a asp-page="./Create" class="btn btn-primary">Ajouter</a></p>
+			<p class="category">
+				<a asp-page="./Create" class="btn btn-primary">Ajouter</a>
+				<a asp-page-handler="ExportCSV" class="btn btn-success">Exporter CSV</a>
+			</p>
 		</div>
 		<div class="content table-responsive table-full-width">
 			<table class="table table-hover table-striped">

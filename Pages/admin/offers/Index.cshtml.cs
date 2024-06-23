@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
 using MVCRealEstate.Helpers;
+using System.Text;
 
 namespace MVCRealEstate.Pages.admin.offers
 {
@@ -43,5 +44,23 @@ namespace MVCRealEstate.Pages.admin.offers
 
             return Page();
         }
-    }
+
+		public async Task<IActionResult> OnGetExportCSVAsync()
+		{
+			var offers = await _context.Offer.ToListAsync();
+
+			var csvBuilder = new StringBuilder();
+			csvBuilder.AppendLine("Référence,Type,Prix,Surface,Location,Description");
+
+			foreach (var offer in offers)
+			{
+				csvBuilder.AppendLine($"{offer.Reference},{offer.Type},{offer.Price},{offer.Surface},{offer.Location?.City},{offer.Description}");
+			}
+
+			var csvBytes = Encoding.UTF8.GetBytes(csvBuilder.ToString());
+			var fileName = "offers.csv";
+
+			return File(csvBytes, "text/csv", fileName);
+		}
+	}
 }
