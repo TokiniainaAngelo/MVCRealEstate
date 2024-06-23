@@ -6,22 +6,25 @@
 	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-<div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
-	<a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
-	<a asp-page="./Edit" asp-route-id="@Model.Location.LocationId" class="btn btn-primary">Modifier</a>
-	<!-- Bouton de suppression -->
-	<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Location.LocationId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette adresse?');">
-		<button type="submit" class="btn btn-danger">Supprimer</button>
-	</form>
+<div class="row" style="margin-bottom:20px;display:flex">
+	<div class="col-md-8"></div>
+	<div class="col-md-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+		<a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
+		<a asp-page="./Edit" asp-route-id="@Model.Location.LocationId" class="btn btn-primary">Modifier</a>
+		<!-- Bouton de suppression -->
+		<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Location.LocationId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette adresse?');">
+			<button type="submit" class="btn btn-danger">Supprimer</button>
+		</form>
+	</div>
 </div>
 <div class="col-md-12">
-	<div id="map-detail"  style="width:100%; height:500px">
+	<div id="map-detail" style="width:100%; height:500px">
 	</div>
 </div>
 
 @section Scripts {
 	<!-- Inclusion de Leaflet.js via CDN -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"  />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 

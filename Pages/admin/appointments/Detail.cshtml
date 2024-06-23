@@ -8,14 +8,17 @@
 	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 <h1>Détails du Rendez-vous</h1>
-<div class="text-right mt-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
-    <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
-    @if (!Model.Appointment.IsBooked)
-    {
-        <form method="post" asp-page-handler="Delete" asp-route-id="@Model.Appointment.AppointmentId">
-            <button type="submit" class="btn btn-danger">Supprimer</button>
-        </form>
-    }
+<div class="row" style="margin-bottom:20px;display:flex">
+    <div class="col-md-8"></div>
+    <div class="col-md-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+        <a asp-page="./Index" class="btn btn-secondary">Retour à la liste</a>
+        @if (!Model.Appointment.IsBooked)
+        {
+            <form method="post" asp-page-handler="Delete" asp-route-id="@Model.Appointment.AppointmentId">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+        }
+    </div>
 </div>
 <div>
     <ul class="list-group">

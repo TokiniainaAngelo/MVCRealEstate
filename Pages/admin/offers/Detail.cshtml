@@ -8,14 +8,17 @@
 }
 <div class="container">
 	<h1 class="mb-4 text-primary">@Model.Offer.Reference</h1>
-	<div class="text-right mt-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
-		<a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary mr-2">Modifier</a>
+	
+	<div class="row" style="margin-bottom:20px;display:flex">
+		<div class="col-md-8"></div>
+		<div class="col-md-4" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+			<a asp-page="./Edit" asp-route-id="@Model.Offer.OfferId" class="btn btn-primary mr-2">Modifier</a>
 
-		<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Offer.OfferId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
-			<button type="submit" class="btn btn-danger">Supprimer</button>
-		</form>
-		<a asp-page="./Index" class="btn btn-secondary mr-2">Retour à la liste</a>
-
+			<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Offer.OfferId" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
+				<button type="submit" class="btn btn-danger">Supprimer</button>
+			</form>
+			<a asp-page="./Index" class="btn btn-secondary mr-2">Retour à la liste</a>
+		</div>
 	</div>
 	
 	<div style="display:flex;flex-direction:column;gap:20px;">
