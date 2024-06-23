@@ -4,13 +4,10 @@
 	ViewData["Title"] = "Index";
 }
 <link rel="stylesheet" href="~/css/offer.css" />
-<div>
-	<a asp-action="Create">Create New</a>
-</div>
 <!--/ Intro Single star /-->
 <section class="intro-single" style="padding:20px 0;">
 	<div class="container">
-		<div class="row">
+		<div class="row w-100">
 			<div class="col-md-12 col-lg-8">
 				<div class="title-single-box">
 					<h1 class="title-single">Liste des offres</h1>
@@ -19,10 +16,11 @@
 		</div>
 	</div>
 </section>
-<form class="search-bar" asp-controller="Offers" asp-action="Index">
-	<input type="text" name="search" class="form-control" />
-	<input type="submit" value="Rechercher" />
+<form class="search-bar" asp-controller="Offers" asp-action="Index" style="margin:20px 0;">
+	<input type="text" name="search" class="form-control" placeholder="Rechercher reference,description" />
+	<input type="submit" value="Rechercher" class="btn btn-success" />
 </form>
+
 <section class="property-grid grid">
 	<div class="container">
 		<div class="row">
@@ -45,24 +43,12 @@
 								</div>
 								<div class="card-body-a">
 									<div class="price-box d-flex">
-										<span class="price-a">>@item.Type | @item.Price Ar</span>
+										<span class="price-a">@item.Type | @item.Price Ar</span>
 									</div>
 									<a asp-controller="Offers" asp-action="Details" asp-route-id="@item.OfferId" class="link-a">
 										Voir les details
 										<span class="ion-ios-arrow-forward"></span>
 									</a>
-								</div>
-								<div class="card-footer-a">
-									<ul class="card-info d-flex justify-content-around">
-										<li>
-											<h4 class="card-info-title">Surface</h4>
-											<span>
-												@item.Surface m
-												<sup>2</sup>
-											</span>
-										</li>
-										
-									</ul>
 								</div>
 							</div>
 						</div>
