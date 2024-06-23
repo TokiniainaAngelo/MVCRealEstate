@@ -25,7 +25,13 @@ namespace MVCRealEstate.Controllers
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
+
 			var userId = HttpContext.Session.GetString("UserId");
+			var login = HttpContext.Session.GetString("Login");
+
+			// Use the session values as needed
+			ViewData["UserId"] = userId;
+			ViewData["Login"] = login;
 
 			if (string.IsNullOrEmpty(userId))
 			{

@@ -57,15 +57,12 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="property-single-carousel" class="owl-carousel owl-arrow gallery-property">
-					<div class="carousel-item-b">
-						<img src="~/medias/sample.jpg" alt="">
-					</div>
-					<div class="carousel-item-b">
-						<img src="~/medias/sample.jpg" alt="">
-					</div>
-					<div class="carousel-item-b">
-						<img src="~/medias/sample.jpg" alt="">
-					</div>
+					@foreach (var img in Model.Medias)
+					{
+						<div class="carousel-item-b">
+							<img src="~/@img.Path" alt="" style="max-height:50vh;object-fit:contain;">
+						</div>
+					}
 				</div>
 				<div class="row justify-content-between">
 					<div class="col-md-5 col-lg-4">
@@ -91,28 +88,28 @@
 								<ul class="list">
 									<li class="d-flex justify-content-between">
 										<strong>Reference:</strong>
-										<span>@Html.DisplayNameFor(model => model.Offer.Reference)</span>
+										<span>@Html.DisplayTextFor(model => model.Offer.Reference)</span>
 									</li>
 									<li class="d-flex justify-content-between">
 										<strong>Type:</strong>
-										<span>@Html.DisplayNameFor(model => model.Offer.RentOrSale)</span>
+										<span>@Html.DisplayTextFor(model => model.Offer.RentOrSale)</span>
 									</li>
 									<li class="d-flex justify-content-between">
 										<strong>Adresse:</strong>
-										<span>@Html.DisplayNameFor(model => model.Offer.Location.Address)</span>
+										<span>@Html.DisplayTextFor(model => model.Offer.Location.Address)</span>
 									</li>
 									<li class="d-flex justify-content-between">
 										<strong>Ville:</strong>
-										<span>@Html.DisplayNameFor(model => model.Offer.Location.City)</span>
+										<span>@Html.DisplayTextFor(model => model.Offer.Location.City)</span>
 									</li>
 									<li class="d-flex justify-content-between">
 										<strong>Surface:</strong>
-										<span>@Html.DisplayNameFor(model => model.Offer.Surface)</span>
+										<span>@Html.DisplayTextFor(model => model.Offer.Surface)</span>
 									</li>
 									<li class="d-flex justify-content-between">
 										<strong>Vendeur / Loueur:</strong>
 										<span>
-											@Html.DisplayNameFor(model => model.Offer.OwnerInfo.FullName)
+											@Html.DisplayTextFor(model => model.Offer.OwnerInfo.FullName)
 										</span>
 									</li>
 								</ul>
@@ -132,34 +129,13 @@
 								@Html.DisplayFor(model => model.Offer.Description)
 							</p>
 						</div>
-						<div class="row section-t3">
-							<div class="col-sm-12">
-								<div class="title-box-d">
-									<h3 class="title-d">Agence</h3>
-								</div>
-							</div>
-						</div>
-						<div class="amenities-list color-text-a">
-							<ul class="list-a no-margin">
-								<li>Balcony</li>
-								<li>Outdoor Kitchen</li>
-								<li>Cable Tv</li>
-								<li>Deck</li>
-								<li>Tennis Courts</li>
-								<li>Internet</li>
-								<li>Parking</li>
-								<li>Sun Room</li>
-								<li>Concrete Flooring</li>
-							</ul>
-						</div>
 					</div>
 					<div class="col-md-10 offset-md-1">
-						<ul class="nav nav-pills-a nav-pills mb-3 section-t3" id="pills-tab" role="tablist">
-							<li class="nav-item">
-								<a class="nav-link active" id="pills-video-tab" data-toggle="pill" href="#pills-video" role="tab"
-								   aria-controls="pills-video" aria-selected="true">Localisation</a>
-							</li>
-						</ul>
+						<div class="col-sm-12">
+							<div class="title-box-d section-t4">
+								<h3 class="title-d">Localisation</h3>
+							</div>
+						</div>
 						<input type="hidden" id="latitude" value="@Model?.Offer?.Location.latitude" />
 						<input type="hidden" id="longitude" value="@Model?.Offer?.Location.longitude" />
 						<input type="hidden" id="address" value="@Model?.Offer?.Location.Address" />

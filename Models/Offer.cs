@@ -25,6 +25,7 @@ namespace MVCRealEstate.Models
 	{
 		public Offer? Offer { get; set; }
 		public List<Appointment>? Appointments { get; set; }
+		public List<OfferMedia>? Medias { get; set; }
 	}
 
 	public class Offer

@@ -82,8 +82,7 @@ namespace MVCRealEstate.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-                var get_user = _context.User.Single(p => p.Login == user.Login
-                && p.Password == user.Password);
+                var get_user = _context.User.FirstOrDefault(p => p.Login == user.Login && p.Password == user.Password);
                 if (get_user != null)
                 {
                 HttpContext.Session.SetString("UserId", get_user.UserId.ToString());

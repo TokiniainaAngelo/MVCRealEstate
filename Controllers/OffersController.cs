@@ -69,14 +69,16 @@ namespace MVCRealEstate.Controllers
                 .Include(o => o.Agency)
                 .Include(o => o.Location)
                 .Include(o => o.OwnerInfo)
-                .FirstOrDefaultAsync(m => m.OfferId == id);
-            var appointments = await _context.Appointment.Where(a => a.OfferId == id).ToListAsync();
-            if (offer == null)
+				.FirstOrDefaultAsync(m => m.OfferId == id);
+			
+			if (offer == null)
             {
                 return NotFound();
             }
 
-            var viewModel = new OfferDetailsViewModel { Appointments = appointments, Offer = offer };
+			var appointments = await _context.Appointment.Where(a => a.OfferId == id).ToListAsync();
+			var offerMedias = await _context.OfferMedia.Where(m => offer.OfferMediaId.Contains(m.OfferMediaId)).ToListAsync();
+			var viewModel = new OfferDetailsViewModel { Appointments = appointments, Offer = offer, Medias=offerMedias };
 
 			return View(viewModel);
         }

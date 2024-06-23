@@ -2,13 +2,12 @@
     width: 100vw;
     height: 100%;
     display:flex;
-    margin-top:20px;
 }
 
 .card{
     background-color:#fff;
     box-shadow:1px 1px 6px #808080;
-    padding:15px ;
+    padding:15px;
     display:grid;
     grid-template-columns: 30% auto;
     gap:15px
