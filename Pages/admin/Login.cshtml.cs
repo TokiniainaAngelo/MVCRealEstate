@@ -25,7 +25,7 @@ namespace MVCRealEstate.Pages.admin
         {
             if (HttpContext.Session.GetString("UserLogin") != null && HttpContext.Session.GetString("UserRole") == "Admin")
             {
-                return RedirectToPage("/admin/Index");
+                return RedirectToPage("/admin/Offers");
             }
             return Page();
         }
@@ -35,7 +35,7 @@ namespace MVCRealEstate.Pages.admin
 
             if(HttpContext.Session.GetString("UserRole") != null)
             {
-                return RedirectToPage("/admin/Index");
+                return RedirectToPage("/admin/Offers");
             }
 
             if (!ModelState.IsValid)
@@ -62,7 +62,7 @@ namespace MVCRealEstate.Pages.admin
             HttpContext.Session.SetString("UserRole", user.Type);
             HttpContext.Session.SetString("UserId", user.UserId.ToString());
 
-            return RedirectToPage("/admin/Index");
+            return RedirectToPage("/admin/Offers/Index");
         }
     }
 }
