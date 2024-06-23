@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MVCRealEstate.Data;
 using MVCRealEstate.Helpers;
 using MVCRealEstate.Models;
+using System.Text;
 
 namespace MVCRealEstate.Pages.admin.owners
 {
@@ -41,5 +42,23 @@ namespace MVCRealEstate.Pages.admin.owners
 
             return Page();
         }
-    }
+
+		public async Task<IActionResult> OnGetExportCSVAsync()
+		{
+			var owners = await _context.OwnerInfo.ToListAsync();
+
+			var csvBuilder = new StringBuilder();
+			csvBuilder.AppendLine("Nom complet,Nom,Prenom,Email");
+
+			foreach (var owner in owners)
+			{
+				csvBuilder.AppendLine($"{owner.FullName},{owner.FirstName},{owner.LastName},{owner.Email}");
+			}
+
+			var csvBytes = Encoding.UTF8.GetBytes(csvBuilder.ToString());
+			var fileName = "owners.csv";
+
+			return File(csvBytes, "text/csv", fileName);
+		}
+	}
 }
