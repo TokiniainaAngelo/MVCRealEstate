@@ -206,6 +206,11 @@ namespace MVCRealEstate.Controllers
 					var existingAppointment = await _context.Appointment.FindAsync(id);
 					var user = HttpContext.Session.GetString("UserId");
 
+                    if(user == null)
+                    {
+						return NotFound();
+                    }
+
 					if (existingAppointment == null)
 					{
 						return NotFound();
@@ -236,38 +241,36 @@ namespace MVCRealEstate.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CancelAppointment(int id)
 		{
-
-
 			if (ModelState.IsValid)
 			{
 				try
 				{
 					// Retrieve the existing appointment from the database
 					var existingAppointment = await _context.Appointment.FindAsync(id);
-					var user = HttpContext.Session.GetString("UserId");
 
 					if (existingAppointment == null)
 					{
 						return NotFound();
 					}
 
-					existingAppointment.UserId = null;
-					existingAppointment.IsBooked = false;
+					// Update appointment properties
+					existingAppointment.UserId = 1;
+					existingAppointment.IsBooked = false; 
 
 					_context.Update(existingAppointment);
 					await _context.SaveChangesAsync();
+
+					return RedirectToAction("Index", "Appointments");
 				}
-				catch (DbUpdateConcurrencyException e)
+				catch (DbUpdateConcurrencyException)
 				{
 					return NotFound();
 				}
-				return RedirectToAction("Index", "Appointments");
 			}
-
-			// If the model state is not valid, you might want to populate any necessary ViewData or SelectList items here.
 
 			return RedirectToAction("Index", "Appointments");
 		}
+
 
 		[HttpPost]
 		public async Task<FileContentResult> GeneratePdfTicket(int appointmentId)
