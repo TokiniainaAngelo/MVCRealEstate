@@ -26,19 +26,19 @@
 		<div class="row">
 			@foreach(var item in Model)
 			{
-				<div class="col-md-4">
+				<div class="col-md-8">
 					<div class="card-box-a card-shadow">
 						<div class="img-box-a">
-							<img src="~/medias/property-1.jpg" alt="" class="img-a img-fluid">
+							<img src="~/@item.OfferMedias[0].Path" alt="" class="img-a img-fluid">
 						</div>
 						<div class="card-overlay">
 							<div class="card-overlay-a-content">
 								<div class="card-header-a">
 									<h2 class="card-title-a">
-										<a href="#">
+										<p>
 											@item.Reference
 											<br />@item.Location.City
-										</a>
+										</p>
 									</h2>
 								</div>
 								<div class="card-body-a">

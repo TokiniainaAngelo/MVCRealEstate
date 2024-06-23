@@ -27,6 +27,12 @@ namespace MVCRealEstate.Controllers
 			var offers =  _context.Offer.Include(o => o.Agency)
 				.Include(o => o.Location)
 				.Include(o => o.OwnerInfo).OrderByDescending(x => x.CreatedAt).Take(3).ToList();
+			foreach (var offer in offers)
+			{
+				offer.OfferMedias = _context.OfferMedia
+					.Where(m => offer.OfferMediaId.Contains(m.OfferMediaId))
+					.ToList();
+			}
 			// Use the session values as needed
 			ViewData["UserId"] = userId;
 			ViewData["Login"] = login;

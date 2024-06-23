@@ -39,6 +39,7 @@ namespace MVCRealEstate.Controllers
 						 .Include(o => o.Agency)
 						 .Include(o => o.OwnerInfo)
 						 .Include(o => o.Location)
+						 .Include(o => o.OfferMedias)
 						 .AsQueryable();
 
 			if (!String.IsNullOrEmpty(search))
@@ -46,7 +47,16 @@ namespace MVCRealEstate.Controllers
 				offers = offers.Where(s => s.Reference!.Contains(search) || s.Description!.Contains(search));
 			}
 
-			return View(await offers.ToListAsync());
+			var offerList = await offers.ToListAsync();
+
+			foreach (var offer in offerList)
+			{
+				offer.OfferMedias = await _context.OfferMedia
+											.Where(m => offer.OfferMediaId.Contains(m.OfferMediaId))
+											.ToListAsync();
+			}
+
+			return View(offerList); ;
 		}
 
 		// GET: Offers/Details/5
